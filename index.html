@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مرجع أوامر السيرفر</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0f0a; --bg2: #0f1a0f; --bg3: #111c11;
+    --card: #131f13; --card2: #162016;
+    --green: #00e676; --green2: #69f0ae; --green3: #b9f6ca;
+    --green-dim: rgba(0,230,118,0.12); --green-glow: rgba(0,230,118,0.25);
+    --yellow: #ffd740; --blue: #40c4ff; --red: #ff5252;
+    --purple: #ce93d8; --orange: #ffab40;
+    --text: #e8f5e9; --text2: #a5d6a7; --text3: #66bb6a;
+    --border: rgba(0,230,118,0.15); --border2: rgba(0,230,118,0.3);
+    --radius: 10px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Cairo', sans-serif; min-height: 100vh; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+    pointer-events: none; z-index: 9999;
+  }
+  header {
+    background: linear-gradient(135deg, #050f05 0%, #0a1f0a 100%);
+    border-bottom: 1px solid var(--border2); padding: 20px 24px;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  }
+  .header-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-icon {
+    width: 42px; height: 42px; background: var(--green-dim);
+    border: 1px solid var(--border2); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+  }
+  .logo-text h1 { font-size: 20px; font-weight: 900; color: var(--green); line-height: 1; letter-spacing: -0.5px; }
+  .logo-text p { font-size: 11px; color: var(--text3); font-weight: 400; }
+  .search-box { flex: 1; max-width: 400px; position: relative; }
+  .search-box input {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px 10px 40px; color: var(--text);
+    font-family: 'Cairo', sans-serif; font-size: 14px;
+    outline: none; transition: border-color 0.2s; direction: rtl;
+  }
+  .search-box input:focus { border-color: var(--green); }
+  .search-box input::placeholder { color: var(--text3); }
+  .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 16px; }
+  .tabs-wrapper {
+    background: var(--bg2); border-bottom: 1px solid var(--border);
+    overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 83px; z-index: 99;
+  }
+  .tabs-wrapper::-webkit-scrollbar { display: none; }
+  .tabs { display: flex; max-width: 1200px; margin: 0 auto; padding: 0 12px; gap: 4px; min-width: max-content; }
+  .tab {
+    padding: 14px 20px; cursor: pointer; font-size: 13px; font-weight: 700;
+    font-family: 'Cairo', sans-serif; color: var(--text2); border: none;
+    background: none; border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .tab:hover { color: var(--green2); }
+  .tab.active { color: var(--green); border-bottom-color: var(--green); background: rgba(0,230,118,0.05); }
+  .tab-badge { background: var(--green-dim); border: 1px solid var(--border); color: var(--text3); font-size: 10px; padding: 1px 6px; border-radius: 20px; }
+  .tab-results { animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,230,118,0.4)} 50%{box-shadow:0 0 0 4px rgba(0,230,118,0)} }
+  main { max-width: 1200px; margin: 0 auto; padding: 28px 16px 60px; }
+  .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .section-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .section-icon.green { background: rgba(0,230,118,0.12); }
+  .section-icon.blue { background: rgba(64,196,255,0.12); }
+  .section-icon.yellow { background: rgba(255,215,64,0.12); }
+  .section-icon.red { background: rgba(255,82,82,0.12); }
+  .section-icon.purple { background: rgba(206,147,216,0.12); }
+  .section-icon.orange { background: rgba(255,171,64,0.12); }
+  .section-info h2 { font-size: 17px; font-weight: 800; color: var(--text); }
+  .section-info p { font-size: 12px; color: var(--text3); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; margin-bottom: 40px; }
+  .cmd-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s; }
+  .cmd-card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,230,118,0.1); transform: translateY(-1px); }
+  .cmd-card.hidden { display: none; }
+  .cmd-header { padding: 12px 14px 0; display: flex; align-items: center; gap: 10px; }
+  .cmd-tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: 700; white-space: nowrap; letter-spacing: 0.3px; }
+  .tag-file { background: rgba(0,230,118,0.12); color: var(--green2); border: 1px solid rgba(0,230,118,0.2); }
+  .tag-net { background: rgba(64,196,255,0.12); color: var(--blue); border: 1px solid rgba(64,196,255,0.2); }
+  .tag-sys { background: rgba(255,215,64,0.12); color: var(--yellow); border: 1px solid rgba(255,215,64,0.2); }
+  .tag-danger { background: rgba(255,82,82,0.12); color: var(--red); border: 1px solid rgba(255,82,82,0.2); }
+  .tag-sudo { background: rgba(255,171,64,0.12); color: var(--orange); border: 1px solid rgba(255,171,64,0.2); }
+  .tag-docker { background: rgba(64,196,255,0.15); color: #80d8ff; border: 1px solid rgba(64,196,255,0.25); }
+  .tag-perm { background: rgba(206,147,216,0.12); color: var(--purple); border: 1px solid rgba(206,147,216,0.2); }
+  .tag-git { background: rgba(244,81,30,0.12); color: #ffab91; border: 1px solid rgba(244,81,30,0.2); }
+  .tag-db { background: rgba(126,87,194,0.12); color: #b39ddb; border: 1px solid rgba(126,87,194,0.2); }
+  .cmd-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .cmd-desc { padding: 6px 14px 10px; font-size: 12px; color: var(--text2); line-height: 1.6; }
+  .cmd-terminal { background: #050f05; border-top: 1px solid var(--border); border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
+  .terminal-bar { background: #0a160a; padding: 6px 12px; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(0,230,118,0.08); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; } .dot-y { background: #febc2e; } .dot-g { background: #28c840; }
+  .terminal-label { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; margin-right: auto; direction: ltr; }
+  .cmd-block { padding: 44px 14px 12px 14px; position: relative; }
+  .cmd-line { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; }
+  .cmd-line:last-child { margin-bottom: 0; }
+  .prompt { color: var(--green); font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; flex-shrink: 0; user-select: none; margin-top: 1px; }
+  .cmd-text { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #e8f5e9; direction: ltr; text-align: left; word-break: break-all; line-height: 1.5; flex: 1; }
+  .cmd-text .kw { color: var(--green2); } .cmd-text .fl { color: var(--yellow); }
+  .cmd-text .cm { color: #4a7c4a; font-style: italic; } .cmd-text .val { color: var(--orange); }
+  .cmd-text .opt { color: var(--blue); } .cmd-text .dng { color: var(--red); }
+  .copy-btn { position: absolute; left: 10px; bottom: 10px; background: var(--green-dim); border: 1px solid var(--border); color: var(--text3); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: 'Cairo', sans-serif; font-weight: 700; transition: all 0.2s; display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .copy-btn:hover { background: rgba(0,230,118,0.2); color: var(--green); border-color: var(--green); }
+  .copy-btn.copied { background: rgba(0,230,118,0.25); color: var(--green); border-color: var(--green); }
+  .no-results { text-align: center; padding: 60px 20px; color: var(--text3); display: none; }
+  .no-results .icon { font-size: 48px; margin-bottom: 12px; } .no-results h3 { font-size: 18px; color: var(--text2); }
+  .stats-bar { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 24px; padding: 14px 16px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+  .stat { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .stat-num { font-size: 22px; font-weight: 900; color: var(--green); font-family: 'JetBrains Mono', monospace; line-height: 1; }
+  .stat-label { color: var(--text3); font-size: 11px; }
+  .danger-notice { background: rgba(255,82,82,0.07); border: 1px solid rgba(255,82,82,0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 12px; color: #ef9a9a; display: flex; align-items: center; gap: 8px; }
+  .panel { display: none; } .panel.active { display: block; }
+  .search-hint { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; margin-bottom: 16px; font-size: 12px; color: var(--text3); display: none; align-items: center; gap: 8px; }
+  .search-hint.visible { display: flex; }
+  footer { text-align: center; padding: 20px; border-top: 1px solid var(--border); color: var(--text3); font-size: 12px; }
+  footer a { color: var(--green); text-decoration: none; }
+  @media (max-width: 640px) {
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .search-box { max-width: 100%; width: 100%; }
+    .grid { grid-template-columns: 1fr; }
+    .stats-bar { gap: 14px; }
+    .tab { padding: 12px 14px; font-size: 12px; }
+  }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #1e3d1e; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--green); }
+  .kbd { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--green2); }
+  .back-to-top { position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text3); font-size: 18px; transition: all 0.2s; z-index: 50; opacity: 0; pointer-events: none; }
+  .back-to-top.visible { opacity: 1; pointer-events: auto; }
+  .back-to-top:hover { background: var(--green-dim); color: var(--green); border-color: var(--green); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">⌨️</div>
+      <div class="logo-text">
+        <h1>مرجع أوامر السيرفر</h1>
+        <p>Linux · Sudo · Docker · Git · DB — نسخ بضغطة واحدة</p>
+      </div>
+    </div>
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="ابحث عن أمر... (Ctrl+K)" autocomplete="off" />
+    </div>
+  </div>
+</header>
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('basic',this)" data-tab="basic">
+      📂 الأساسيات <span class="tab-badge" id="badge-basic">0</span>
+    </button>
+    <button class="tab" onclick="switchTab('network',this)" data-tab="network">
+      🌐 الشبكة <span class="tab-badge" id="badge-network">0</span>
+    </button>
+    <button class="tab" onclick="switchTab('sudo',this)" data-tab="sudo">
+      🔐 Sudo <span class="tab-badge" id="badge-sudo">0</span>
+    </button>
+    <button class="tab" onclick="switchTab('docker',this)" data-tab="docker">
+      🐳 Docker <span class="tab-badge" id="badge-docker">0</span>
+    </button>
+    <button class="tab" onclick="switchTab('git',this)" data-tab="git">
+      🔀 Git <span class="tab-badge" id="badge-git">0</span>
+    </button>
+    <button class="tab" onclick="switchTab('db',this)" data-tab="db">
+      🗄️ قواعد البيانات <span class="tab-badge" id="badge-db">0</span>
+    </button>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════════ TAB: BASIC ═══════════════ -->
+<div class="panel active" id="panel-basic">
+
+  <div class="stats-bar" id="stats-basic">
+    <div class="stat"><div class="stat-num" id="count-basic">0</div><div class="stat-label">أمر متاح</div></div>
+    <div class="stat"><div class="stat-num">⚡</div><div class="stat-label">نسخ فوري</div></div>
+  </div>
+
+  <!-- استعراض الملفات -->
+  <div class="section-title">
+    <div class="section-icon green">📂</div>
+    <div class="section-info">
+      <h2>استعراض الملفات والمجلدات</h2>
+      <p>التنقل وعرض محتوى النظام</p>
+    </div>
+  </div>
+  <div class="grid">
+
+    <div class="cmd-card" data-search="ls عرض الملفات list files">
+      <div class="cmd-header">
+        <span class="cmd-tag tag-file">ملفات</span>
+        <span class="cmd-title">عرض الملفات في المجلد</span>
+      </div>
+      <div class="cmd-desc">يعرض قائمة بجميع الملفات والمجلدات في المسار الحالي</div>
+      <div class="cmd-terminal">
+        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">bash</span></div>
+        <div class="cmd-block">
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="opt">-l</span>     <span class="cm"># تفاصيل + الصلاحيات</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="opt">-la</span>    <span class="cm"># يشمل الملفات المخفية</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="opt">-lh</span>    <span class="cm"># حجم الملف بشكل مقروء</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="opt">-lt</span>    <span class="cm"># ترتيب حسب التاريخ</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="opt">-ltr</span>   <span class="cm"># ترتيب عكسي حسب التاريخ</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">ls</span> <span class="fl">/etc</span>   <span class="cm"># عرض مجلد معين</span></span></div>
+          <button class="copy-btn" onclick="copyCmd(this)">📋 نسخ الكل</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmd-card" data-search="pwd مسار المجلد الحالي print working directory">
+      <div class="cmd-header">
+        <span class="cmd-tag tag-file">ملفات</span>
+        <span class="cmd-title">عرض المسار الحالي</span>
+      </div>
+      <div class="cmd-desc">يظهر المسار الكامل للمجلد الذي أنت فيه الآن</div>
+      <div class="cmd-terminal">
+        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">bash</span></div>
+        <div class="cmd-block">
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">pwd</span></span></div>
+          <div class="cmd-line"><span class="prompt">#</span><span class="cmd-text"><span class="cm">→ /home/ayoub/projects</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">pwd</span> <span class="opt">-P</span>   <span class="cm"># المسار الفعلي (بدون روابط رمزية)</span></span></div>
+          <button class="copy-btn" onclick="copyCmd(this)">📋 نسخ</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmd-card" data-search="whoami من المستخدم الحالي current user">
+      <div class="cmd-header">
+        <span class="cmd-tag tag-sys">نظام</span>
+        <span class="cmd-title">معرفة المستخدم الحالي</span>
+      </div>
+      <div class="cmd-desc">يعرض اسم المستخدم الذي تعمل بصلاحياته الآن</div>
+      <div class="cmd-terminal">
+        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">bash</span></div>
+        <div class="cmd-block">
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">whoami</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">id</span>         <span class="cm"># يعرض ID + المجموعات</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">who</span>        <span class="cm"># المستخدمون المتصلون</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">w</span>          <span class="cm"># تفاصيل المتصلين</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">last</span>       <span class="cm"># آخر عمليات تسجيل الدخول</span></span></div>
+          <button class="copy-btn" onclick="copyCmd(this)">📋 نسخ الكل</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmd-card" data-search="cd تغيير المجلد change directory">
+      <div class="cmd-header">
+        <span class="cmd-tag tag-file">ملفات</span>
+        <span class="cmd-title">التنقل بين المجلدات</span>
+      </div>
+      <div class="cmd-desc">الانتقال من مجلد لآخر في نظام الملفات</div>
+      <div class="cmd-terminal">
+        <div class="terminal-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="terminal-label">bash</span></div>
+        <div class="cmd-block">
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">cd</span> <span class="fl">/var/www</span>  <span class="cm"># الانتقال لمسار معين</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">cd</span> <span class="opt">..</span>       <span class="cm"># المجلد السابق</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">cd</span> <span class="opt">~</span>        <span class="cm"># المجلد الرئيسي (Home)</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">cd</span> <span class="opt">-</span>        <span class="cm"># المجلد السابق</span></span></div>
+          <div class="cmd-line"><span class="prompt">$</span><span class="cmd-text"><span class="kw">cd</span> <span class="opt">../..</span>    <span class="cm"># مستويين للأعلى</span></span></div>
+          <button class="copy-btn" onclick="copyCmd(this)">📋 نسخ الكل</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cmd-card" data-search="cat عرض محتوى ملف view file content">
+      <div class="cmd-header">
+        <span class="cmd-tag tag-file">ملفات</span>
+        <span class="cmd-title">عرض محتوى الملف</span>
+      </div>
+      <div class="cmd-desc">قراءة وعرض محتوى الملفات النصية مباشرة في الترمينال</div>
+      <div class="cmd-terminal">
+        <div class="terminal-bar"><div class="dot dot-r"></di

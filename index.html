@@ -309,8 +309,9 @@ html[data-theme="dark"] .tag-expert{color:#C9B2F2}
 /* ═══════════════════════════════════════════
    البيانات — كل أمر بسطر واحد (ثنائي اللغة)
    ═══════════════════════════════════════════ */
+// ✅ بعد — المُصحح:
 const D=(id,lv,n,enD,arD,enA,arA,code,enT,arT)=>({
-  id,lv,n,
+  id,lv,n,code,
   en:{d:enD,a:enA,t:enT||""}, ar:{d:arD,a:arA,t:arT||""},
   hay:(id+" "+n+" "+enD+" "+arD+" "+enA+" "+arA).toLowerCase()
 });

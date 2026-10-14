@@ -3,1927 +3,1190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مرجع أوامر السيرفر | Server Commands Reference</title>
+<title>مرجع أوامر السيرفر 🖥️ | Reesha</title>
+<meta name="description" content="مرجع تفاعلي لأوامر السيرفر: Linux · Sudo · Docker · Git · Nginx · UFW — من التعلم إلى الاحترافية.">
+<meta property="og:title" content="مرجع أوامر السيرفر 🖥️">
+<meta property="og:description" content="45 أمرًا أساسيًا لإدارة السيرفرات — بحث فوري، وضع ليلي، ودعم عربي/إنجليزي.">
+<meta name="theme-color" content="#FAF7F0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12160D" media="(prefers-color-scheme: dark)">
 <link rel="icon" type="image/png" href="https://ik.imagekit.io/imgayoub/LOGO/ayoub.pw%20logo%20many%20size/no%20background/android-chrome-192x192.png?updatedAt=1778461922147">
+
+<!-- ⚡ يمنع وميض الثيم عند التحميل -->
+<script>document.documentElement.dataset.theme=localStorage.getItem("reesha-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cairo+Play:wght@400..900&family=Fraunces:opsz,wght@9..144,400..900&family=Nunito+Sans:opsz,wght@6..12,400..900&display=swap" rel="stylesheet">
+
 <style>
-/* ═══════════════════════════════════════════
-   مرجع أوامر السيرفر — Server Commands Reference
-   تصميم: بني (Brown Theme)
-   ═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   مرجع أوامر السيرفر — Reesha / ريشة Style
+   organic · warm · nature · multicolor gradients
+   ═══════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
 
-/* ─── CSS Variables (ألوان التصميم البني المطور) ─── */
-:root {
-  --brown-50:  #fdf8f3;
-  --brown-100: #f5ebe0;
-  --brown-150: #efe0d0;
-  --brown-200: #e6d2b8;
-  --brown-300: #d4b48c;
-  --brown-400: #c29560;
-  --brown-500: #a67c52;
-  --brown-600: #8c6340;
-  --brown-700: #6b4a30;
-  --brown-800: #4a3320;
-  --brown-900: #2b1e12;
-  --brown-950: #1a1109;
-  --accent:    #c29560;
-  --accent-light: #d4b48c;
-  --success:   #4a7c59;
-  --danger:    #8b3a3a;
-  --warning:   #b8860b;
-  --info:      #5a7a9a;
-  --font-main: 'Segoe UI', 'Noto Sans Arabic', Tahoma, sans-serif;
-  --font-mono: 'Fira Code', 'Cascadia Mono', 'Consolas', monospace;
-  --radius: 12px;
-  --radius-sm: 8px;
-  --shadow: 0 4px 20px rgba(43, 30, 18, 0.12);
-  --shadow-hover: 0 8px 30px rgba(43, 30, 18, 0.22);
-  --shadow-card: 0 2px 12px rgba(43, 30, 18, 0.08);
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+:root{
+  --violet:#6D4AAE; --orchid:#C1499B; --sky:#4A87C7; --teal:#23A6A0; --emerald:#4CAF6D;
+  --grad:linear-gradient(120deg,#6D4AAE,#C1499B 28%,#4A87C7 55%,#23A6A0 78%,#4CAF6D);
+
+  --bg:#FAF7F0; --surface:#FFFFFF; --surface-2:#F4EFE3;
+  --text:#26221A; --text-soft:#6E6756; --text-faint:#9A9280;
+  --border:#E9E2D0; --code-bg:#191D12; --code-text:#E9E4D5;
+  --shadow:0 10px 30px -12px rgba(38,34,26,.16);
+  --shadow-lg:0 20px 44px -14px rgba(38,34,26,.25);
+  --radius:16px; --radius-sm:12px; --navH:58px;
+  --font-mono:'Fira Code','Cascadia Mono',Consolas,monospace;
+  --tr:all .28s cubic-bezier(.4,0,.2,1);
+  color-scheme:light;
 }
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: var(--font-main);
-  background: var(--brown-50);
-  color: var(--brown-900);
-  line-height: 1.7;
-  min-height: 100vh;
+html[data-theme="dark"]{
+  --bg:#12160D; --surface:#1B2113; --surface-2:#171B10;
+  --text:#F1EDE1; --text-soft:#B6B09E; --text-faint:#847F70;
+  --border:#2C3320; --code-bg:#0D110A; --code-text:#E4E0D2;
+  --shadow:0 10px 30px -12px rgba(0,0,0,.55);
+  --shadow-lg:0 20px 44px -14px rgba(0,0,0,.65);
+  color-scheme:dark;
 }
+html[lang="ar"]{--font-display:'Cairo Play','Fraunces',serif;--font-body:'Almarai','Nunito Sans',sans-serif}
+html[lang="en"]{--font-display:'Fraunces','Cairo Play',serif;--font-body:'Nunito Sans','Almarai',sans-serif}
 
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--brown-100); }
-::-webkit-scrollbar-thumb { background: var(--brown-400); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--brown-600); }
-
-/* ─── Header مطور ─── */
-.header {
-  background: var(--brown-950);
-  color: var(--brown-100);
-  padding: 2.5rem 1.5rem 2rem;
-  text-align: center;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 25px rgba(0,0,0,0.35);
-  overflow: hidden;
+body{
+  font-family:var(--font-body); background:var(--bg); color:var(--text);
+  line-height:1.7; min-height:100vh; overflow-x:hidden;
+  transition:background .3s ease,color .3s ease;
 }
+h1,h2,.brand-name,.f-motto{font-family:var(--font-display)}
+code,pre,kbd,.command-name{font-family:var(--font-mono)}
 
-.header::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%;
-  width: 200%; height: 200%;
-  background: radial-gradient(circle at 30% 50%, rgba(194,149,96,0.08) 0%, transparent 50%),
-              radial-gradient(circle at 70% 50%, rgba(107,74,48,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
+/* ─── Haloa / الهالات الخلفية ─── */
+.bg-glow{position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);pointer-events:none;opacity:.5;transition:opacity .4s}
+html[data-theme="dark"] .bg-glow{opacity:.25}
+.glow-1{width:480px;height:480px;background:var(--violet);top:-160px;inset-inline-start:-140px}
+.glow-2{width:420px;height:420px;background:var(--teal);top:34%;inset-inline-end:-170px}
+.glow-3{width:460px;height:460px;background:var(--orchid);bottom:-180px;inset-inline-start:28%}
 
-.header h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  position: relative;
-  z-index: 1;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.header h1 img { width: 44px; height: 44px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); transition: transform 0.3s ease; }
-.header h1 img:hover { transform: rotate(10deg) scale(1.1); }
-.header p { color: var(--brown-300); font-size: 1rem; position: relative; z-index: 1; opacity: 0.9; }
-
-.header h1 {
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
-.header h1 img { width: 40px; height: 40px; }
-
-.header p { color: var(--brown-300); font-size: 0.95rem; }
-
-.search-container {
-  max-width: 700px;
-  margin: 1.5rem auto 0;
-  position: relative;
-}
-
-.search-container input {
-  width: 100%;
-  padding: 0.85rem 3rem 0.85rem 1rem;
-  border: 2px solid var(--brown-700);
-  border-radius: var(--radius);
-  background: var(--brown-900);
-  color: var(--brown-100);
-  font-size: 1rem;
-  font-family: var(--font-main);
-  transition: all 0.3s ease;
-}
-
-.search-container input::placeholder { color: var(--brown-400); }
-
-.search-container input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(194, 149, 96, 0.2);
-}
-
-.search-container .search-icon {
-  position: absolute;
-  left: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--brown-400);
-  font-size: 1.1rem;
-}
-
-/* ─── Level Tabs مطورة ─── */
-.level-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 1.2rem 1rem;
-  background: rgba(245,235,224,0.95);
-  border-bottom: 1px solid var(--brown-200);
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 90;
-  backdrop-filter: blur(10px);
-}
-
-.level-tab {
-  padding: 0.65rem 1.5rem;
-  border: 2px solid transparent;
-  border-radius: 30px;
-  background: var(--brown-200);
-  color: var(--brown-800);
-  font-family: var(--font-main);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.level-tab::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.level-tab:hover { background: var(--brown-300); transform: translateY(-2px); box-shadow: var(--shadow); }
-
-.level-tab.active {
-  background: var(--brown-700);
-  color: var(--brown-100);
-  box-shadow: var(--shadow);
-  border-color: var(--brown-500);
-}
-
-.level-tab .tab-count {
-  background: rgba(255,255,255,0.2);
-  color: inherit;
-  font-size: 0.7rem;
-  padding: 0.1rem 0.4rem;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-/* ─── Container ─── */
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
-.section-title {
-  font-size: 1.4rem;
-  color: var(--brown-800);
-  margin: 2rem 0 1rem;
-  padding-right: 1rem;
-  border-right: 4px solid var(--brown-500);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* ─── Command Card ─── */
-.command-card {
-  background: #fff;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  margin-bottom: 1rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid var(--brown-200);
-}
-
-.command-card:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-  border-color: var(--brown-300);
-}
-
-.command-header {
-  padding: 1rem 1.25rem;
-  background: var(--brown-100);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  cursor: pointer;
-  user-select: none;
-}
-
-.command-name {
-  font-family: var(--font-mono);
-  font-size: 1.05rem;
-  color: var(--brown-900);
-  font-weight: 600;
-  direction: ltr;
-  text-align: left;
-  flex: 1;
-}
-
-.command-desc {
-  color: var(--brown-600);
-  font-size: 0.85rem;
-  flex: 2;
-  text-align: right;
-}
-
-.command-tag {
-  padding: 0.2rem 0.6rem;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.tag-basic { background: #d4edda; color: #155724; }
-.tag-intermediate { background: #fff3cd; color: #856404; }
-.tag-advanced { background: #f8d7da; color: #721c24; }
-.tag-expert { background: #e2e3e5; color: #383d41; }
-
-.toggle-icon {
-  font-size: 1.2rem;
-  color: var(--brown-500);
-  transition: transform 0.3s ease;
-}
-
-.command-card.expanded .toggle-icon { transform: rotate(180deg); }
-
-.command-body {
-  padding: 0 1.25rem;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, padding 0.4s ease;
-}
-
-.command-card.expanded .command-body {
-  padding: 1rem 1.25rem;
-  max-height: 600px;
-}
-
-.command-explanation {
-  color: var(--brown-700);
-  font-size: 0.9rem;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px dashed var(--brown-200);
-}
-
-/* ─── Code Block مطور ─── */
-.code-wrapper {
-  position: relative;
-  background: var(--brown-950);
-  border-radius: var(--radius-sm);
-  padding: 1.2rem;
-  margin-bottom: 0.8rem;
-  overflow-x: auto;
-  border: 1px solid var(--brown-800);
-}
-
-.code-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--brown-600), var(--accent));
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  opacity: 0.6;
-}
-
-.code-wrapper pre {
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  color: #e8dcc8;
-  line-height: 1.7;
-  white-space: pre-wrap;
-  word-break: break-all;
-  direction: ltr;
-  text-align: left;
-  padding-left: 0.5rem;
-  padding-top: 0.3rem;
-}
-
-.code-comment { color: #8a7e6b; }
-.code-string { color: #c2a86b; }
-.code-keyword { color: #d4a574; }
-.code-command { color: #e8c39e; }
-.code-arg { color: #a8c4a0; }
-.code-flag { color: #c9a0dc; }
-.code-number { color: #7ec4a0; }
-
-/* ─── Copy Button ─── */
-.copy-btn {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  background: var(--brown-700);
-  color: var(--brown-100);
-  border: none;
-  border-radius: 6px;
-  padding: 0.45rem 0.9rem;
-  font-family: var(--font-main);
-  font-size: 0.82rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 5;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-
-.copy-btn:hover {
-  background: var(--brown-500);
-  transform: scale(1.05) translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  border-color: var(--accent);
-}
-
-.copy-btn:active {
-  transform: scale(0.98);
-}
-
-.copy-btn.copied {
-  background: var(--success);
-  border-color: #3d6b4a;
-  animation: pulse 0.3s ease;
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-
-/* ─── Tip Box مطور ─── */
-.tip-box {
-  background: var(--brown-100);
-  border-right: 4px solid var(--warning);
-  padding: 0.9rem 1.1rem;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  margin-top: 0.6rem;
-  font-size: 0.87rem;
-  color: var(--brown-700);
-  position: relative;
-  overflow: hidden;
-}
-
-.tip-box::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 100%; height: 100%;
-  background: linear-gradient(135deg, rgba(184,134,11,0.05) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.tip-box strong { color: var(--brown-800); }
-
-.tip-box.danger { border-right-color: var(--danger); }
-.tip-box.danger::before { background: linear-gradient(135deg, rgba(139,58,58,0.05) 0%, transparent 50%); }
-
-.tip-box.info { border-right-color: var(--info); }
-.tip-box.info::before { background: linear-gradient(135deg, rgba(90,122,154,0.05) 0%, transparent 50%); }
-
-/* ─── Stats Bar ─── */
-.stats-bar {
-  display: flex; justify-content: center; gap: 2rem; padding: 1rem;
-  background: var(--brown-950); color: var(--brown-300); font-size: 0.85rem;
-  border-bottom: 1px solid var(--brown-800); flex-wrap: wrap;
-}
-.stat-item { display: flex; align-items: center; gap: 0.4rem; }
-.stat-item .stat-number { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
-
-/* ─── Progress Bar ─── */
-.progress-bar { position: fixed; top: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--brown-500)); z-index: 1000; width: 0%; transition: width 0.1s ease; }
-
-/* ─── Back to Top ─── */
-.back-to-top {
-  position: fixed; bottom: 2rem; left: 2rem; width: 48px; height: 48px;
-  background: var(--brown-700); color: var(--brown-100); border: 2px solid var(--brown-500);
-  border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  font-size: 1.2rem; box-shadow: var(--shadow); transition: var(--transition);
-  opacity: 0; visibility: hidden; transform: translateY(20px); z-index: 99;
-}
-.back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.back-to-top:hover { background: var(--brown-500); transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+/* ─── أدوات ─── */
+.gradient-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:3px solid var(--orchid);outline-offset:2px;border-radius:6px}
+::selection{background:rgba(193,73,155,.28)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--violet),var(--teal));border-radius:99px;border:2px solid var(--bg)}
+mark{background:rgba(35,166,160,.32);color:inherit;border-radius:4px;padding:0 .1em}
 
 /* ─── شريط التقدم ─── */
-/* ─── Footer مطور ─── */
-.footer {
-  text-align: center;
-  padding: 2.5rem 1rem;
-  background: var(--brown-950);
-  color: var(--brown-400);
-  margin-top: 3rem;
-  font-size: 0.85rem;
-  position: relative;
-  overflow: hidden;
+.progress{position:fixed;top:0;inset-inline-start:0;height:4px;width:0;background:var(--grad);z-index:80;transition:width .1s linear}
+
+/* ─── Navbar (صلب — بدون glass) ─── */
+.nav{position:sticky;top:0;z-index:60;height:var(--navH);background:var(--bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding-inline:clamp(.8rem,3vw,2rem);transition:background .3s}
+.brand{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none}
+.brand img{width:34px;height:34px;transition:transform .3s}
+.brand:hover img{transform:rotate(8deg) scale(1.08)}
+.brand-name{font-weight:800;font-size:1.05rem}
+.nav-actions{display:flex;gap:.5rem}
+.nav-btn{min-width:44px;min-height:36px;border-radius:12px;cursor:pointer;font:inherit;font-weight:800;font-size:.85rem;display:inline-flex;align-items:center;justify-content:center;transition:var(--tr)}
+.nb-ghost{border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;color:var(--text)}
+.nb-plain{border:2px solid var(--border);background:var(--surface);font-size:1.02rem}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+
+/* ─── Hero ─── */
+.hero{text-align:center;padding:3rem 1rem 2rem;max-width:920px;margin:0 auto}
+.eyebrow{display:inline-flex;gap:.45rem;align-items:center;padding:.35rem 1rem;border-radius:999px;background:var(--surface);border:1px solid var(--border);color:var(--text-soft);font-size:.85rem;font-weight:700}
+.hero h1{font-size:clamp(2.1rem,6vw,3.2rem);font-weight:800;margin:1rem 0 .4rem;line-height:1.3}
+.hero-sub{color:var(--text-soft);max-width:62ch;margin:0 auto}
+.hero-actions{display:flex;justify-content:center;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}
+
+/* ─── بحث ─── */
+.search-wrap{position:relative;max-width:640px;margin:1.6rem auto 0;width:100%}
+.search-input{width:100%;padding-block:.95rem;padding-inline-start:3rem;padding-inline-end:4.8rem;border-radius:var(--radius);border:2px solid var(--border);background:var(--surface);color:var(--text);font-family:var(--font-body);font-size:1rem;transition:var(--tr)}
+.search-input::placeholder{color:var(--text-faint)}
+.search-input:focus{outline:none;border-color:transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;box-shadow:0 0 0 4px rgba(193,73,155,.16)}
+.s-icon{position:absolute;inset-inline-start:1rem;top:50%;translate:0 -50%;pointer-events:none}
+.s-kbd{position:absolute;inset-inline-end:.9rem;top:50%;translate:0 -50%;font-size:.68rem;color:var(--text-faint);border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:.12rem .45rem;background:var(--surface-2);pointer-events:none}
+
+/* ─── أزرار ─── */
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.65rem 1.3rem;border-radius:999px;font:inherit;font-weight:800;font-size:.9rem;cursor:pointer;border:none;transition:var(--tr)}
+.btn-grad{background:var(--grad);background-size:160% 100%;color:#fff}
+.btn-grad:hover{background-position:100% 0;transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(109,74,174,.55)}
+.btn-ghost{border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;color:var(--text)}
+.btn-ghost:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+
+/* ─── إحصائيات ─── */
+.stats{display:flex;gap:.55rem;flex-wrap:wrap;justify-content:center;margin-top:1.5rem}
+.stat{display:inline-flex;align-items:center;gap:.4rem;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:.4rem 1rem;font-size:.85rem;color:var(--text-soft)}
+.stat b{font-size:1.02rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ─── أمر اليوم ─── */
+.cotd-row{display:flex;justify-content:center;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:1.3rem}
+.cotd{display:inline-flex;align-items:center;gap:.7rem;padding:.55rem 1.15rem;border-radius:999px;border:2px solid transparent;background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;cursor:pointer;font:inherit;transition:var(--tr)}
+.cotd:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.cotd-label{font-size:.75rem;font-weight:800;color:var(--text-faint)}
+.cotd code{direction:ltr;font-weight:700;font-size:1rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cotd-desc{color:var(--text-soft);font-size:.85rem}
+.cotd-dice{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-size:1rem;transition:var(--tr)}
+.cotd-dice:hover{transform:rotate(25deg) scale(1.08);border-color:var(--teal)}
+
+/* ─── تبويبات المستويات ─── */
+.tabs{position:sticky;top:var(--navH);z-index:50;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:center;gap:.5rem;padding:.7rem 1rem;flex-wrap:wrap;transition:background .3s}
+.tab{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.15rem;border-radius:999px;border:2px solid var(--border);background:var(--surface);color:var(--text-soft);font:inherit;font-weight:700;font-size:.88rem;cursor:pointer;transition:var(--tr)}
+.tab:hover{transform:translateY(-2px);border-color:var(--teal)}
+.tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 6px 16px -6px rgba(109,74,174,.45)}
+
+/* ─── الحاوية وعناوين الأقسام ─── */
+.container{max-width:1100px;margin:0 auto;padding:1.4rem 1rem 0}
+.sec-head{margin:2.2rem 0 1rem}
+.sec-head h2{font-size:1.5rem;font-weight:800;display:inline-flex;align-items:center;gap:.5rem}
+.sec-head .bar{display:block;width:76px;height:5px;border-radius:3px;background:var(--grad);margin-top:.5rem}
+
+/* ─── بطاقة الأمر (حد متدرج 2px — حيلة padding/border box) ─── */
+.command-card{
+  border:2px solid transparent;border-radius:20px;overflow:hidden;
+  background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--grad) border-box;
+  box-shadow:var(--shadow);margin-bottom:14px;scroll-margin-top:140px;
+  transition:transform .28s cubic-bezier(.4,0,.2,1),box-shadow .28s;
 }
+.command-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.command-card.flash{animation:flash 1.2s ease 2}
+@keyframes flash{0%,100%{box-shadow:var(--shadow)}40%{box-shadow:0 0 0 7px rgba(35,166,160,.35)}}
 
-.footer::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-  opacity: 0.5;
+.command-head{display:flex;align-items:center;gap:.7rem;width:100%;padding:1rem 1.25rem;background:none;border:none;font:inherit;color:inherit;text-align:start;cursor:pointer}
+.command-head:focus-visible{outline-offset:-4px;border-radius:18px}
+.command-name{direction:ltr;font-weight:700;font-size:1rem;flex:0 0 auto;transition:var(--tr)}
+.command-card:hover .command-name{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.command-desc{flex:1;color:var(--text-soft);font-size:.9rem;min-width:0}
+.tag{flex-shrink:0;padding:.15rem .7rem;border-radius:999px;font-size:.72rem;font-weight:800;font-family:var(--font-body)}
+.tag-basic{background:rgba(76,175,109,.16);color:#2F7C46}
+.tag-intermediate{background:rgba(74,135,199,.16);color:#2F639A}
+.tag-advanced{background:rgba(193,73,155,.16);color:#A03379}
+.tag-expert{background:rgba(109,74,174,.16);color:#5B3D95}
+html[data-theme="dark"] .tag-basic{color:#8FE0A6}
+html[data-theme="dark"] .tag-intermediate{color:#9CC8F0}
+html[data-theme="dark"] .tag-advanced{color:#EFA7D4}
+html[data-theme="dark"] .tag-expert{color:#C9B2F2}
+.chev{color:var(--text-faint);transition:transform .3s;font-size:.9rem}
+.command-card.open .chev{transform:rotate(180deg)}
+
+/* فتح/طي سلس بتقنية grid-rows */
+.command-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1)}
+.command-card.open .command-body{grid-template-rows:1fr}
+.cb-in{overflow:hidden;min-height:0}
+.cb-pad{padding:.3rem 1.25rem 1.25rem}
+.cmd-about{color:var(--text-soft);font-size:.92rem;margin-bottom:.8rem;padding-bottom:.7rem;border-bottom:1px dashed var(--border)}
+
+/* ─── كود ─── */
+.code-wrap{position:relative;background:var(--code-bg);border-radius:var(--radius-sm);padding:.6rem .9rem .95rem;margin-bottom:.8rem;overflow:hidden}
+.cw-top{display:flex;align-items:center;gap:.4rem}
+.dot{width:9px;height:9px;border-radius:50%}
+.d1{background:var(--violet)} .d2{background:var(--orchid)} .d3{background:var(--teal)}
+.cw-tag{margin-inline-start:.5rem;font-size:.68rem;color:#8A9480;letter-spacing:.5px}
+.copy-btn{margin-inline-start:auto;background:linear-gradient(120deg,var(--violet),var(--orchid));color:#fff;border:none;border-radius:8px;padding:.32rem .8rem;font:inherit;font-size:.76rem;font-weight:700;cursor:pointer;display:inline-flex;gap:.3rem;align-items:center;transition:var(--tr)}
+.copy-btn:hover{transform:translateY(-1px) scale(1.04);box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.copy-btn:active{transform:scale(.96)}
+.copy-btn.ok{background:linear-gradient(120deg,var(--emerald),var(--teal))}
+.code-wrap pre{margin-top:.7rem;font-size:.85rem;line-height:1.75;color:var(--code-text);white-space:pre;overflow-x:auto;direction:ltr;text-align:left}
+.tk-c{color:#8A9480;font-style:italic}
+.tk-k{color:#C9B2F2;font-weight:600}
+.tk-s{color:#EFB1D6}
+.tk-f{color:#9FDCD5}
+.tk-n{color:#ABE6B6}
+
+/* ─── صناديق التلميح ─── */
+.tip-box{border-inline-start:4px solid var(--emerald);background:rgba(76,175,109,.1);padding:.8rem 1rem;border-radius:var(--radius-sm);margin-top:.6rem;font-size:.86rem;color:var(--text-soft)}
+.tip-box.warn{border-inline-start-color:var(--orchid);background:rgba(193,73,155,.1)}
+.tip-box.info{border-inline-start-color:var(--sky);background:rgba(74,135,199,.1)}
+.tip-box strong{color:var(--text)}
+
+/* ─── لا نتائج ─── */
+.no-results{text-align:center;padding:3rem 1rem;color:var(--text-faint);font-size:1.05rem}
+
+/* ─── زر العودة للأعلى ─── */
+.to-top{position:fixed;bottom:1.4rem;inset-inline-start:1.4rem;width:46px;height:46px;border-radius:50%;border:none;background:var(--grad);color:#fff;font-size:1.1rem;cursor:pointer;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transform:translateY(14px);transition:var(--tr);z-index:70}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{transform:translateY(-3px)}
+
+/* ─── الفوتر ─── */
+.footer{margin-top:4.5rem;padding:2.6rem 1rem 2.2rem;text-align:center;background:var(--surface-2);border-top:1px solid var(--border);transition:background .3s}
+.f-bar{display:block;height:4px;width:min(420px,70%);margin:0 auto 1.6rem;background:var(--grad);border-radius:99px}
+.f-logo{width:46px;height:46px;border-radius:12px;box-shadow:var(--shadow)}
+.f-motto{font-size:1.25rem;font-weight:800;margin:.6rem 0 .3rem}
+.f-line{color:var(--text-faint);font-size:.85rem}
+.f-line a{color:var(--sky);font-weight:700;text-decoration:none}
+.f-line a:hover{text-decoration:underline}
+
+/* ─── استجابة ─── */
+@media (max-width:768px){
+  .command-head{flex-wrap:wrap;row-gap:.35rem;padding:.9rem 1rem}
+  .command-desc{order:5;flex-basis:100%;font-size:.84rem}
+  .command-name{font-size:.94rem}
+  .hero{padding:2.3rem 1rem 1.6rem}
+  .cb-pad{padding:.3rem 1rem 1.1rem}
 }
-
-.footer a { color: var(--brown-300); text-decoration: none; transition: color 0.3s ease; }
-.footer a:hover { color: var(--accent); }
-
-.no-results {
-  text-align: center;
-  padding: 3rem;
-  color: var(--brown-500);
-  font-size: 1.1rem;
-  display: none;
+@media (max-width:480px){
+  .s-kbd{display:none}
+  .search-input{padding-inline-end:3rem}
+  .stat{padding:.32rem .7rem;font-size:.78rem}
+  .tab{padding:.5rem .9rem;font-size:.8rem}
+  .btn{padding:.55rem 1rem;font-size:.85rem}
+  .hero h1{font-size:1.7rem}
+  .cotd{flex-wrap:wrap;justify-content:center}
 }
-
-@media (max-width: 768px) {
-  .header { padding: 1.8rem 1rem 1.5rem; }
-  .header h1 { font-size: 1.4rem; }
-  .header h1 img { width: 36px; height: 36px; }
-  .command-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-  .command-name { font-size: 0.95rem; }
-  .command-desc { text-align: right; width: 100%; font-size: 0.82rem; }
-  .level-tab { padding: 0.55rem 1.1rem; font-size: 0.8rem; }
-  .container { padding: 1rem 0.75rem; }
-  .stats-bar { gap: 1rem; font-size: 0.8rem; }
-  .back-to-top { width: 42px; height: 42px; bottom: 1rem; left: 1rem; }
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
 }
-
-@media (max-width: 480px) {
-  .header h1 { font-size: 1.15rem; }
-  .search-container input { padding: 0.85rem 3rem 0.85rem 1rem; font-size: 0.9rem; }
-  .command-name { font-size: 0.9rem; }
-  .copy-btn { padding: 0.35rem 0.7rem; font-size: 0.75rem; }
-}
-
-html { scroll-behavior: smooth; }
 </style>
 </head>
 <body>
 
-<!-- شريط التقدم -->
-<div class="progress-bar" id="progressBar"></div>
+<div class="bg-glow glow-1" aria-hidden="true"></div>
+<div class="bg-glow glow-2" aria-hidden="true"></div>
+<div class="bg-glow glow-3" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<!-- ═══════════════════════════════════════ -->
-<!--           HEADER                       -->
-<!-- ═══════════════════════════════════════ -->
-<header class="header">
-  <h1>
-    <img src="https://ik.imagekit.io/imgayoub/LOGO/ayoub.pw%20logo%20many%20size/no%20background/android-chrome-192x192.png?updatedAt=1778461922147" alt="Logo">
-    مرجع أوامر السيرفر
-  </h1>
-  <p>من التعلم إلى الاحترافية — Linux / Sudo / Docker / Git / Nginx / UFW</p>
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="ابحث عن أمر... (مثال: chmod, docker, nginx)" autocomplete="off">
-    <span class="search-icon">🔍</span>
+<!-- ═══ Navbar ═══ -->
+<nav class="nav">
+  <a class="brand" href="#top">
+    <img src="https://ik.imagekit.io/imgayoub/LOGO/ayoub.pw%20logo%20many%20size/no%20background/android-chrome-192x192.png?updatedAt=1778461922147" alt="" width="34" height="34">
+    <span class="brand-name gradient-text" data-i="brand">مرجع الأوامر</span>
+  </a>
+  <div class="nav-actions">
+    <button id="langBtn" class="nav-btn nb-ghost" type="button">EN</button>
+    <button id="themeBtn" class="nav-btn nb-plain" type="button" aria-label="Theme">🌙</button>
   </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<header class="hero" id="top">
+  <p class="eyebrow">🌿 <span data-i="eyebrow">دليلك المورقي من أول sudo حتى الاحتراف</span></p>
+  <h1><span class="gradient-text" data-i="title">مرجع أوامر السيرفر</span> <span aria-hidden="true">🖥️</span></h1>
+  <p class="hero-sub" data-i="heroSub">من التعلم إلى الاحترافية — Linux · Sudo · Docker · Git · Nginx · UFW</p>
+
+  <div class="search-wrap">
+    <input id="search" class="search-input" type="search" dir="auto" autocomplete="off"
+           placeholder="ابحث عن أمر… (chmod, docker, nginx)" aria-label="بحث">
+    <span class="s-icon" aria-hidden="true">🔍</span>
+    <kbd class="s-kbd" aria-hidden="true">Ctrl + K</kbd>
+  </div>
+
+  <div class="hero-actions">
+    <button id="expandAll" class="btn btn-grad" type="button">✨ <span data-i="expandAll">فتح الكل</span></button>
+    <button id="collapseAll" class="btn btn-ghost" type="button">🍃 <span data-i="collapseAll">طي الكل</span></button>
+  </div>
+
+  <div class="stats" id="stats"></div>
+  <div class="cotd-row" id="cotdRow"></div>
 </header>
 
-<!-- ═══════════════════════════════════════ -->
-<!--         STATS BAR                      -->
-<!-- ═══════════════════════════════════════ -->
-<div class="stats-bar">
-  <div class="stat-item"><span class="stat-number" id="statTotal">0</span> أمر</div>
-  <div class="stat-item">|</div>
-  <div class="stat-item"><span class="stat-number" id="statBasic">0</span> مبتدئ</div>
-  <div class="stat-item"><span class="stat-number" id="statIntermediate">0</span> متوسط</div>
-  <div class="stat-item"><span class="stat-number" id="statAdvanced">0</span> متقدم</div>
-  <div class="stat-item"><span class="stat-number" id="statExpert">0</span> احترافي</div>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--         LEVEL TABS                     -->
-<!-- ═══════════════════════════════════════ -->
-<div class="level-tabs">
-  <button class="level-tab active" data-level="all"><span>📚</span> الكل</button>
-  <button class="level-tab" data-level="basic"><span>🌱</span> مبتدئ</button>
-  <button class="level-tab" data-level="intermediate"><span>🌿</span> متوسط</button>
-  <button class="level-tab" data-level="advanced"><span>🌳</span> متقدم</button>
-  <button class="level-tab" data-level="expert"><span>🏆</span> احترافي</button>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--         MAIN CONTENT                   -->
-<!-- ═══════════════════════════════════════ -->
-<div class="container" id="commandsContainer">
-
-<!-- ═══════════════════════════════════════ -->
-<!--  المستوى: مبتدئ (Basic)               -->
-<!-- ═══════════════════════════════════════ -->
-<div class="section-title" data-level="basic">🌱 أوامر المبتدئين</div>
-
-<!-- ls -->
-<div class="command-card" data-level="basic" data-search="ls list directory files folders">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">ls</span>
-    <span class="command-desc">عرض محتويات المجلد</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُستخدم لعرض الملفات والمجلدات الموجودة في المسار الحالي.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض الملفات بشكل بسيط</span>
-<span class="code-command">ls</span>
-
-<span class="code-comment"># عرض الملفات مع التفاصيل (الصلاحيات، الحجم، التاريخ)</span>
-<span class="code-command">ls</span> <span class="code-flag">-la</span>
-
-<span class="code-comment"># عرض الملفات حسب الحجم (الأكبر أولاً)</span>
-<span class="code-command">ls</span> <span class="code-flag">-lhS</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>💡 تلميح:</strong> الاختصار <code>-la</code> يعني: <code>l</code> = تفاصيل، <code>a</code> = إظهار الملفات المخفية.</div>
-  </div>
-</div>
-
-<!-- cd -->
-<div class="command-card" data-level="basic" data-search="cd change directory navigate folder">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">cd</span>
-    <span class="command-desc">تغيير المجلد الحالي</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُستخدم للتنقل بين المجلدات في نظام الملفات.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># الانتقال إلى مجلد معين</span>
-<span class="code-command">cd</span> <span class="code-arg">/var/www/html</span>
-
-<span class="code-comment"># الرجوع خطوة واحدة للخلف</span>
-<span class="code-command">cd</span> <span class="code-arg">..</span>
-
-<span class="code-comment"># الانتقال إلى مجلد المنزل (Home)</span>
-<span class="code-command">cd</span> <span class="code-arg">~</span>
-
-<span class="code-comment"># الرجوع إلى المجلد السابق</span>
-<span class="code-command">cd</span> <span class="code-arg">-</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- pwd -->
-<div class="command-card" data-level="basic" data-search="pwd print working directory current path">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">pwd</span>
-    <span class="command-desc">عرض المسار الحالي</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يطبع المسار الكامل للمجلد الذي أنت فيه حالياً.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض المسار الحالي</span>
-<span class="code-command">pwd</span>
-
-<span class="code-comment"># عرض المسار الحقيقي (يفك الروابط الرمزية)</span>
-<span class="code-command">pwd</span> <span class="code-flag">-P</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- mkdir -->
-<div class="command-card" data-level="basic" data-search="mkdir make directory create folder">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">mkdir</span>
-    <span class="command-desc">إنشاء مجلد جديد</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُنشئ مجلد/مجلدات جديدة في المسار المحدد.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إنشاء مجلد واحد</span>
-<span class="code-command">mkdir</span> <span class="code-arg">my-project</span>
-
-<span class="code-comment"># إنشاء مجلدات متداخلة (الأب ثم الابن)</span>
-<span class="code-command">mkdir</span> <span class="code-flag">-p</span> <span class="code-arg">projects/web/app</span>
-
-<span class="code-comment"># إنشاء مجلد مع تحديد الصلاحيات</span>
-<span class="code-command">mkdir</span> <span class="code-flag">-m</span> <span class="code-number">755</span> <span class="code-arg">public</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- rm -->
-<div class="command-card" data-level="basic" data-search="rm remove delete file folder directory">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">rm</span>
-    <span class="command-desc">حذف ملف أو مجلد</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يحذف الملفات والمجلدات. احذر! لا يوجد سلة محذوفات في Linux.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># حذف ملف</span>
-<span class="code-command">rm</span> <span class="code-arg">file.txt</span>
-
-<span class="code-comment"># حذف مجلد وكل محتوياته (بقوة)</span>
-<span class="code-command">rm</span> <span class="code-flag">-rf</span> <span class="code-arg">old-folder/</span>
-
-<span class="code-comment"># حذف ملف مع التأكيد</span>
-<span class="code-command">rm</span> <span class="code-flag">-i</span> <span class="code-arg">important.txt</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>⚠️ تحذير:</strong> <code>rm -rf /</code> سيحذف كل شيء في السيرفر! لا تستخدمه أبداً!</div>
-  </div>
-</div>
-
-<!-- cp -->
-<div class="command-card" data-level="basic" data-search="cp copy file folder directory duplicate">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">cp</span>
-    <span class="command-desc">نسخ ملف أو مجلد</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">ينسخ الملفات والمجلدات من مكان إلى آخر.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># نسخ ملف</span>
-<span class="code-command">cp</span> <span class="code-arg">source.txt</span> <span class="code-arg">destination.txt</span>
-
-<span class="code-comment"># نسخ مجلد كامل</span>
-<span class="code-command">cp</span> <span class="code-flag">-r</span> <span class="code-arg">folder1/</span> <span class="code-arg">folder2/</span>
-
-<span class="code-comment"># نسخ مع الحفاظ على الصلاحيات والتواريخ</span>
-<span class="code-command">cp</span> <span class="code-flag">-a</span> <span class="code-arg">backup/</span> <span class="code-arg">archive/</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- mv -->
-<div class="command-card" data-level="basic" data-search="mv move rename file folder">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">mv</span>
-    <span class="command-desc">نقل أو إعادة تسمية ملف</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُستخدم لنقل الملفات/المجلدات أو إعادة تسميتها.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إعادة تسمية ملف</span>
-<span class="code-command">mv</span> <span class="code-arg">oldname.txt</span> <span class="code-arg">newname.txt</span>
-
-<span class="code-comment"># نقل ملف إلى مجلد آخر</span>
-<span class="code-command">mv</span> <span class="code-arg">file.txt</span> <span class="code-arg">/home/user/documents/</span>
-
-<span class="code-comment"># نقل مجلد كامل</span>
-<span class="code-command">mv</span> <span class="code-arg">project/</span> <span class="code-arg">/var/www/</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- cat -->
-<div class="command-card" data-level="basic" data-search="cat concatenate view file content read">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">cat</span>
-    <span class="command-desc">عرض محتوى ملف</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يقرأ ويعرض محتوى الملفات النصية في الطرفية.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض محتوى ملف</span>
-<span class="code-command">cat</span> <span class="code-arg">config.txt</span>
-
-<span class="code-comment"># عرض أول 10 أسطر</span>
-<span class="code-command">cat</span> <span class="code-arg">log.txt</span> <span class="code-flag">|</span> <span class="code-command">head</span> <span class="code-flag">-n</span> <span class="code-number">10</span>
-
-<span class="code-comment"># دمج ملفين في ملف واحد</span>
-<span class="code-command">cat</span> <span class="code-arg">file1.txt</span> <span class="code-arg">file2.txt</span> <span class="code-flag">></span> <span class="code-arg">combined.txt</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- touch -->
-<div class="command-card" data-level="basic" data-search="touch create empty file update timestamp">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">touch</span>
-    <span class="command-desc">إنشاء ملف فارغ أو تحديث تاريخه</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُنشئ ملفاً فارغاً جديداً، أو يحدّث تاريخ آخر تعديل لملف موجود.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إنشاء ملف فارغ</span>
-<span class="code-command">touch</span> <span class="code-arg">newfile.txt</span>
-
-<span class="code-comment"># إنشاء عدة ملفات دفعة واحدة</span>
-<span class="code-command">touch</span> <span class="code-arg">file1.txt</span> <span class="code-arg">file2.txt</span> <span class="code-arg">file3.txt</span>
-
-<span class="code-comment"># تحديث تاريخ الملف</span>
-<span class="code-command">touch</span> <span class="code-flag">-m</span> <span class="code-arg">existing.txt</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- nano -->
-<div class="command-card" data-level="basic" data-search="nano editor text edit file vim">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">nano</span>
-    <span class="command-desc">محرر نصوص بسيط</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">محرر نصوص سهل الاستخدام في الطرفية، مثالي للمبتدئين.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># فتح ملف في nano</span>
-<span class="code-command">nano</span> <span class="code-arg">config.txt</span>
-
-<span class="code-comment"># فتح ملف مع إظهار أرقام الأسطر</span>
-<span class="code-command">nano</span> <span class="code-flag">-l</span> <span class="code-arg">script.sh</span>
-
-<span class="code-comment"># اختصارات nano:</span>
-<span class="code-comment"># Ctrl+O = حفظ | Ctrl+X = خروج | Ctrl+K = قص سطر</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>💡 تلميح:</strong> للخروج اضغط <code>Ctrl+X</code> ثم <code>Y</code> للحفظ.</div>
-  </div>
-</div>
-
-<!-- clear -->
-<div class="command-card" data-level="basic" data-search="clear clean terminal screen">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">clear</span>
-    <span class="command-desc">مسح شاشة الطرفية</span>
-    <span class="command-tag tag-basic">مبتدئ</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يمسح كل النصوص من شاشة الطرفية ليعطيك مساحة نظيفة.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># مسح الشاشة</span>
-<span class="code-command">clear</span>
-
-<span class="code-comment"># اختصار أسرع</span>
-<span class="code-command">Ctrl</span> + <span class="code-command">L</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--  المستوى: متوسط (Intermediate)        -->
-<!-- ═══════════════════════════════════════ -->
-<div class="section-title" data-level="intermediate">🌿 أوامر المتوسط</div>
-
-<!-- chmod -->
-<div class="command-card" data-level="intermediate" data-search="chmod permissions file mode access rights">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">chmod</span>
-    <span class="command-desc">تغيير صلاحيات الملف</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يتحكم في من يمكنه قراءة/كتابة/تنفيذ الملف.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إعطاء كل الصلاحيات للجميع</span>
-<span class="code-command">chmod</span> <span class="code-number">777</span> <span class="code-arg">file.sh</span>
-
-<span class="code-comment"># إعطاء صلاحيات للمالك فقط</span>
-<span class="code-command">chmod</span> <span class="code-number">755</span> <span class="code-arg">script.sh</span>
-
-<span class="code-comment"># إضافة صلاحية التنفيذ</span>
-<span class="code-command">chmod</span> <span class="code-flag">+x</span> <span class="code-arg">app</span>
-
-<span class="code-comment"># تطبيق على مجلد ومحتوياته</span>
-<span class="code-command">chmod</span> <span class="code-flag">-R</span> <span class="code-number">755</span> <span class="code-arg">/var/www</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>📊 جدول الصلاحيات:</strong> 7=rwx | 6=rw- | 5=r-x | 4=r-- | 3=-wx | 2=-w- | 1=--x | 0=---</div>
-  </div>
-</div>
-
-<!-- chown -->
-<div class="command-card" data-level="intermediate" data-search="chown change owner user group file">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">chown</span>
-    <span class="command-desc">تغيير مالك الملف</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُغيّر المستخدم والمجموعة المالكين للملف أو المجلد.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تغيير المالك</span>
-<span class="code-command">chown</span> <span class="code-arg">user</span> <span class="code-arg">file.txt</span>
-
-<span class="code-comment"># تغيير المالك والمجموعة</span>
-<span class="code-command">chown</span> <span class="code-arg">user:group</span> <span class="code-arg">file.txt</span>
-
-<span class="code-comment"># تطبيق على مجلد ومحتوياته</span>
-<span class="code-command">chown</span> <span class="code-flag">-R</span> <span class="code-arg">www-data:www-data</span> <span class="code-arg">/var/www</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- grep -->
-<div class="command-card" data-level="intermediate" data-search="grep search text pattern find string">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">grep</span>
-    <span class="command-desc">البحث عن نص داخل الملفات</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">أداة قوية للبحث عن أنماط نصية داخل الملفات أو مخرجات الأوامر.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># البحث عن كلمة في ملف</span>
-<span class="code-command">grep</span> <span class="code-string">"error"</span> <span class="code-arg">log.txt</span>
-
-<span class="code-comment"># البحث بدون حساسية لحالة الأحرف</span>
-<span class="code-command">grep</span> <span class="code-flag">-i</span> <span class="code-string">"warning"</span> <span class="code-arg">*.log</span>
-
-<span class="code-comment"># البحث مع إظهار رقم السطر</span>
-<span class="code-command">grep</span> <span class="code-flag">-n</span> <span class="code-string">"failed"</span> <span class="code-arg">syslog</span>
-
-<span class="code-comment"># البحث العكسي (كل ما عدا الكلمة)</span>
-<span class="code-command">grep</span> <span class="code-flag">-v</span> <span class="code-string">"success"</span> <span class="code-arg">output.log</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- find -->
-<div class="command-card" data-level="intermediate" data-search="find search file directory locate">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">find</span>
-    <span class="command-desc">البحث عن ملفات ومجلدات</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يبحث عن الملفات والمجلدات بناءً على معايير متنوعة (الاسم، الحجم، التاريخ).</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># البحث عن ملف بالاسم</span>
-<span class="code-command">find</span> <span class="code-arg">/home</span> <span class="code-flag">-name</span> <span class="code-string">"*.txt"</span>
-
-<span class="code-comment"># البحث عن ملفات أكبر من 100MB</span>
-<span class="code-command">find</span> <span class="code-arg">/var/log</span> <span class="code-flag">-size</span> <span class="code-string">+100M</span>
-
-<span class="code-comment"># البحث عن ملفات تم تعديلها قبل 7 أيام</span>
-<span class="code-command">find</span> <span class="code-arg">.</span> <span class="code-flag">-mtime</span> <span class="code-number">+7</span>
-
-<span class="code-comment"># البحث وحذف الملفات القديمة</span>
-<span class="code-command">find</span> <span class="code-arg">/tmp</span> <span class="code-flag">-name</span> <span class="code-string">"*.tmp"</span> <span class="code-flag">-delete</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- tar -->
-<div class="command-card" data-level="intermediate" data-search="tar archive compress gzip zip extract">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">tar</span>
-    <span class="command-desc">أرشفة وضغط الملفات</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُنشئ أرشيفات (tarballs) ويضغطها بـ gzip أو bzip2.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إنشاء أرشيف مضغوط</span>
-<span class="code-command">tar</span> <span class="code-flag">-czvf</span> <span class="code-arg">backup.tar.gz</span> <span class="code-arg">folder/</span>
-
-<span class="code-comment"># فك ضغط أرشيف</span>
-<span class="code-command">tar</span> <span class="code-flag">-xzvf</span> <span class="code-arg">backup.tar.gz</span>
-
-<span class="code-comment"># عرض محتوى الأرشيف بدون فكه</span>
-<span class="code-command">tar</span> <span class="code-flag">-tzvf</span> <span class="code-arg">archive.tar.gz</span>
-
-<span class="code-comment"># إنشاء أرشيف بدون ضغط</span>
-<span class="code-command">tar</span> <span class="code-flag">-cvf</span> <span class="code-arg">files.tar</span> <span class="code-arg">file1</span> <span class="code-arg">file2</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>🔑 حفظ الاختصارات:</strong> c=create | x=extract | z=gzip | v=verbose | f=file</div>
-  </div>
-</div>
-
-<!-- df -->
-<div class="command-card" data-level="intermediate" data-search="df disk free space storage usage">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">df</span>
-    <span class="command-desc">عرض مساحة القرص</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُظهر مساحة القرص المتاحة والمستخدمة لكل نظام ملفات.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض مساحة القرص بشكل مقروء</span>
-<span class="code-command">df</span> <span class="code-flag">-h</span>
-
-<span class="code-comment"># عرض نوع نظام الملفات</span>
-<span class="code-command">df</span> <span class="code-flag">-Th</span>
-
-<span class="code-comment"># عرض مساحة مجلد معين</span>
-<span class="code-command">df</span> <span class="code-flag">-h</span> <span class="code-arg">/var</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- du -->
-<div class="command-card" data-level="intermediate" data-search="du disk usage folder size directory">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">du</span>
-    <span class="command-desc">عرض حجم المجلدات والملفات</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُقدّر حجم الملفات والمجلدات ويُظهر استهلاك القرص.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># حجم مجلد معين</span>
-<span class="code-command">du</span> <span class="code-flag">-sh</span> <span class="code-arg">/var/log</span>
-
-<span class="code-comment"># حجم جميع المجلدات في المسار الحالي</span>
-<span class="code-command">du</span> <span class="code-flag">-sh</span> <span class="code-arg">*</span> <span class="code-flag">|</span> <span class="code-command">sort</span> <span class="code-flag">-rh</span>
-
-<span class="code-comment"># حجم الملفات الكبيرة فقط (>100MB)</span>
-<span class="code-command">du</span> <span class="code-flag">-ah</span> <span class="code-arg">/var</span> <span class="code-flag">|</span> <span class="code-command">grep</span> <span class="code-string">'[0-9]00M\|G\s'</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- ps -->
-<div class="command-card" data-level="intermediate" data-search="ps process status running tasks list">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">ps</span>
-    <span class="command-desc">عرض العمليات الجارية</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُظهر العمليات (processes) التي تعمل حالياً في النظام.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض العمليات الحالية</span>
-<span class="code-command">ps</span> <span class="code-flag">aux</span>
-
-<span class="code-comment"># البحث عن عملية معينة</span>
-<span class="code-command">ps</span> <span class="code-flag">aux</span> <span class="code-flag">|</span> <span class="code-command">grep</span> <span class="code-string">"nginx"</span>
-
-<span class="code-comment"># عرض شجرة العمليات</span>
-<span class="code-command">ps</span> <span class="code-flag">auxf</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- top / htop -->
-<div class="command-card" data-level="intermediate" data-search="top htop process monitor cpu memory usage">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">top / htop</span>
-    <span class="command-desc">مراقبة موارد النظام</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُظهران استهلاك CPU وRAM والعمليات في الوقت الفعلي. htop أجمل وأسهل.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># مراقبة النظام (الأصلي)</span>
-<span class="code-command">top</span>
-
-<span class="code-comment"># تثبيت htop (أفضل واجهة)</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">install</span> <span class="code-arg">htop</span> <span class="code-flag">-y</span>
-
-<span class="code-comment"># تشغيل htop</span>
-<span class="code-command">htop</span>
-
-<span class="code-comment"># عرض العمليات حسب استهلاك الذاكرة</span>
-<span class="code-command">top</span> <span class="code-flag">-o</span> <span class="code-string">%MEM</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>⌨️ اختصارات top:</strong> <code>q</code>=خروج | <code>k</code>=إيقاف عملية | <code>M</code>=ترتيب حسب RAM | <code>P</code>=ترتيب حسب CPU</div>
-  </div>
-</div>
-
-<!-- wget / curl -->
-<div class="command-card" data-level="intermediate" data-search="wget curl download file http https request">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">wget / curl</span>
-    <span class="command-desc">تحميل الملفات من الإنترنت</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُحملان الملفات من URLs. curl أقوى ويدعم APIs، wget أسهل للتحميل المباشر.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تحميل ملف بـ wget</span>
-<span class="code-command">wget</span> <span class="code-string">"https://example.com/file.zip"</span>
-
-<span class="code-comment"># تحميل مع استئناف (Resume)</span>
-<span class="code-command">wget</span> <span class="code-flag">-c</span> <span class="code-string">"https://example.com/bigfile.iso"</span>
-
-<span class="code-comment"># تحميل بـ curl</span>
-<span class="code-command">curl</span> <span class="code-flag">-O</span> <span class="code-string">"https://example.com/file.zip"</span>
-
-<span class="code-comment"># إرسال طلب GET وعرض النتيجة</span>
-<span class="code-command">curl</span> <span class="code-string">"https://api.example.com/data"</span>
-
-<span class="code-comment"># إرسال طلب POST مع JSON</span>
-<span class="code-command">curl</span> <span class="code-flag">-X</span> <span class="code-string">POST</span> <span class="code-flag">-H</span> <span class="code-string">"Content-Type: application/json"</span> <span class="code-flag">-d</span> <span class="code-string">'{"key":"value"}'</span> <span class="code-string">"https://api.example.com"</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- systemctl -->
-<div class="command-card" data-level="intermediate" data-search="systemctl service start stop restart enable disable status systemd">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">systemctl</span>
-    <span class="command-desc">إدارة خدمات النظام</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُتحكم في خدمات النظام (services) مثل nginx, ssh, mysql.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تشغيل خدمة</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">start</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># إيقاف خدمة</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">stop</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># إعادة تشغيل خدمة</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">restart</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># تفعيل الخدمة عند الإقلاع</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">enable</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># عرض حالة الخدمة</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">status</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># عرض جميع الخدمات النشطة</span>
-<span class="code-command">systemctl</span> <span class="code-command">list-units</span> <span class="code-flag">--type=service</span> <span class="code-flag">--state=running</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- journalctl -->
-<div class="command-card" data-level="intermediate" data-search="journalctl logs systemd service error debug">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">journalctl</span>
-    <span class="command-desc">عرض سجلات النظام (Logs)</span>
-    <span class="command-tag tag-intermediate">متوسط</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُعرض سجلات systemd وخدمات النظام. أداة قوية لتتبع الأخطاء.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض جميع السجلات</span>
-<span class="code-command">journalctl</span>
-
-<span class="code-comment"># سجلات خدمة معينة</span>
-<span class="code-command">journalctl</span> <span class="code-flag">-u</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># السجلات الأخيرة (Live)</span>
-<span class="code-command">journalctl</span> <span class="code-flag">-f</span> <span class="code-flag">-u</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># سجلات اليوم فقط</span>
-<span class="code-command">journalctl</span> <span class="code-flag">--since</span> <span class="code-string">"today"</span>
-
-<span class="code-comment"># سجلات منذ آخر إقلاع</span>
-<span class="code-command">journalctl</span> <span class="code-flag">-b</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--  المستوى: متقدم (Advanced)            -->
-<!-- ═══════════════════════════════════════ -->
-<div class="section-title" data-level="advanced">🌳 أوامر المتقدمين</div>
-
-<!-- sudo -->
-<div class="command-card" data-level="advanced" data-search="sudo superuser do root privileges admin">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">sudo</span>
-    <span class="command-desc">تنفيذ أوامر بصلاحيات الجذر (Root)</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُنفّذ الأوامر بصلاحيات المستخدم الجذر (Root). يتطلب كلمة مرور.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تنفيذ أمر كـ root</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">update</span>
-
-<span class="code-comment"># فتح shell كـ root</span>
-<span class="code-command">sudo</span> <span class="code-flag">-i</span>
-
-<span class="code-comment"># تنفيذ أمر كمستخدم آخر</span>
-<span class="code-command">sudo</span> <span class="code-flag">-u</span> <span class="code-arg">www-data</span> <span class="code-command">whoami</span>
-
-<span class="code-comment"># تعديل ملف محمي</span>
-<span class="code-command">sudo</span> <span class="code-command">nano</span> <span class="code-arg">/etc/nginx/nginx.conf</span>
-
-<span class="code-comment"># عرض الأوامر المسموحة للمستخدم</span>
-<span class="code-command">sudo</span> <span class="code-flag">-l</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>⚠️ تنبيه:</strong> لا تستخدم <code>sudo</code> إلا عند الحاجة. تجنب <code>sudo rm -rf</code>!</div>
-  </div>
-</div>
-
-<!-- ssh -->
-<div class="command-card" data-level="advanced" data-search="ssh secure shell remote connect server login">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">ssh</span>
-    <span class="command-desc">الاتصال بالسيرفر عن بُعد</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُتيح الاتصال الآمن بالسيرفرات البعيدة عبر بروتوكول SSH.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># الاتصال بسيرفر</span>
-<span class="code-command">ssh</span> <span class="code-arg">user@192.168.1.100</span>
-
-<span class="code-comment"># الاتصال بمنفذ مخصص</span>
-<span class="code-command">ssh</span> <span class="code-flag">-p</span> <span class="code-number">2222</span> <span class="code-arg">user@server.com</span>
-
-<span class="code-comment"># الاتصال بمفتاح SSH</span>
-<span class="code-command">ssh</span> <span class="code-flag">-i</span> <span class="code-arg">~/.ssh/id_rsa</span> <span class="code-arg">user@server.com</span>
-
-<span class="code-comment"># نسخ مفتاح SSH إلى السيرفر</span>
-<span class="code-command">ssh-copy-id</span> <span class="code-arg">user@server.com</span>
-
-<span class="code-comment"># تشغيل أمر على السيرفر البعيد</span>
-<span class="code-command">ssh</span> <span class="code-arg">user@server</span> <span class="code-string">"ls -la /var/log"</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- scp -->
-<div class="command-card" data-level="advanced" data-search="scp secure copy transfer file remote server upload download">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">scp</span>
-    <span class="command-desc">نقل الملفات بين السيرفرات</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">ينقل الملفات بأمان بين جهازك والسيرفر عبر SSH.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># رفع ملف إلى السيرفر</span>
-<span class="code-command">scp</span> <span class="code-arg">localfile.txt</span> <span class="code-arg">user@server:/home/user/</span>
-
-<span class="code-comment"># رفع مجلد كامل</span>
-<span class="code-command">scp</span> <span class="code-flag">-r</span> <span class="code-arg">localfolder/</span> <span class="code-arg">user@server:/var/www/</span>
-
-<span class="code-comment"># تحميل ملف من السيرفر</span>
-<span class="code-command">scp</span> <span class="code-arg">user@server:/var/log/syslog</span> <span class="code-arg">./</span>
-
-<span class="code-comment"># نقل بين سيرفرين</span>
-<span class="code-command">scp</span> <span class="code-arg">user1@server1:/file.txt</span> <span class="code-arg">user2@server2:/path/</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- crontab -->
-<div class="command-card" data-level="advanced" data-search="crontab cron job schedule task automation">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">crontab</span>
-    <span class="command-desc">جدولة المهام التلقائية</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُشغّل أوامر بشكل تلقائي في أوقات محددة (مثل النسخ الاحتياطي الليلي).</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تعديل جدول المهام</span>
-<span class="code-command">crontab</span> <span class="code-flag">-e</span>
-
-<span class="code-comment"># عرض المهام المجدولة</span>
-<span class="code-command">crontab</span> <span class="code-flag">-l</span>
-
-<span class="code-comment"># مثال: نسخ احتياطي يومي الساعة 2 صباحاً</span>
-<span class="code-number">0 2 * * *</span> <span class="code-command">/home/user/backup.sh</span>
-
-<span class="code-comment"># مثال: تنظيف سجلات كل أسبوع</span>
-<span class="code-number">0 0 * * 0</span> <span class="code-command">/home/user/cleanup.sh</span>
-
-<span class="code-comment"># مثال: فحص كل 5 دقائق</span>
-<span class="code-number">*/5 * * * *</span> <span class="code-command">/home/user/check.sh</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>📅 ترتيب الأوقات:</strong> دقيقة | ساعة | يوم | شهر | يوم الأسبوع (0=الأحد)</div>
-  </div>
-</div>
-
-<!-- netstat / ss -->
-<div class="command-card" data-level="advanced" data-search="netstat ss network connections ports listening socket">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">netstat / ss</span>
-    <span class="command-desc">مراقبة الاتصالات والمنافذ</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُظهران الاتصالات الشبكية النشطة والمنافذ المفتوحة. ss أحدث وأسرع.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض جميع الاتصالات</span>
-<span class="code-command">ss</span> <span class="code-flag">-tuln</span>
-
-<span class="code-comment"># عرض الاتصالات المستمعة فقط</span>
-<span class="code-command">ss</span> <span class="code-flag">-lnt</span>
-
-<span class="code-comment"># البحث عن منفذ معين</span>
-<span class="code-command">ss</span> <span class="code-flag">-tuln</span> <span class="code-flag">|</span> <span class="code-command">grep</span> <span class="code-string">":80"</span>
-
-<span class="code-comment"># عرض العمليات المرتبطة بالمنافذ</span>
-<span class="code-command">ss</span> <span class="code-flag">-tulnp</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- iptables / ufw -->
-<div class="command-card" data-level="advanced" data-search="iptables ufw firewall rules allow deny port security">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">iptables / ufw</span>
-    <span class="command-desc">إدارة جدار الحماية (Firewall)</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يتحكمان في حركة المرور الشبكية. ufw أسهل للاستخدام (Uncomplicated Firewall).</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تفعيل UFW</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">enable</span>
-
-<span class="code-comment"># السماح بمنفذ SSH</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">allow</span> <span class="code-number">22</span><span class="code-arg">/tcp</span>
-
-<span class="code-comment"># السماح بمنفذ HTTP و HTTPS</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">allow</span> <span class="code-number">80</span><span class="code-arg">/tcp</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">allow</span> <span class="code-number">443</span><span class="code-arg">/tcp</span>
-
-<span class="code-comment"># حظر منفذ</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">deny</span> <span class="code-number">3306</span>
-
-<span class="code-comment"># عرض حالة الجدار</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">status</span> <span class="code-flag">verbose</span>
-
-<span class="code-comment"># حذف قاعدة</span>
-<span class="code-command">sudo</span> <span class="code-command">ufw</span> <span class="code-command">delete</span> <span class="code-command">allow</span> <span class="code-number">8080</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- apt / yum / dnf -->
-<div class="command-card" data-level="advanced" data-search="apt yum dnf package manager install update remove">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">apt / yum / dnf</span>
-    <span class="command-desc">مدير الحزم (Package Manager)</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُثبّت، يُحدّث، ويُحذف البرامج. apt لـ Debian/Ubuntu، yum/dnf لـ CentOS/RHEL.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تحديث قائمة الحزم (Ubuntu/Debian)</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">update</span>
-
-<span class="code-comment"># ترقية جميع الحزم</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">upgrade</span> <span class="code-flag">-y</span>
-
-<span class="code-comment"># تثبيت حزمة</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">install</span> <span class="code-arg">nginx</span> <span class="code-flag">-y</span>
-
-<span class="code-comment"># حذف حزمة</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">remove</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># تنظيف الحزم غير المستخدمة</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">autoremove</span> <span class="code-flag">-y</span>
-
-<span class="code-comment"># البحث عن حزمة</span>
-<span class="code-command">apt</span> <span class="code-command">search</span> <span class="code-arg">mysql</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- useradd / usermod -->
-<div class="command-card" data-level="advanced" data-search="useradd usermod useradd add user create account">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">useradd / usermod</span>
-    <span class="command-desc">إدارة المستخدمين</span>
-    <span class="command-tag tag-advanced">متقدم</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُنشئان ويُعدّلان حسابات المستخدمين على السيرفر.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># إنشاء مستخدم جديد</span>
-<span class="code-command">sudo</span> <span class="code-command">useradd</span> <span class="code-flag">-m</span> <span class="code-arg">newuser</span>
-
-<span class="code-comment"># تعيين كلمة مرور</span>
-<span class="code-command">sudo</span> <span class="code-command">passwd</span> <span class="code-arg">newuser</span>
-
-<span class="code-comment"># إضافة مستخدم لمجموعة sudo</span>
-<span class="code-command">sudo</span> <span class="code-command">usermod</span> <span class="code-flag">-aG</span> <span class="code-arg">sudo</span> <span class="code-arg">newuser</span>
-
-<span class="code-comment"># تغيير shell المستخدم</span>
-<span class="code-command">sudo</span> <span class="code-command">usermod</span> <span class="code-flag">-s</span> <span class="code-arg">/bin/bash</span> <span class="code-arg">newuser</span>
-
-<span class="code-comment"># حذف مستخدم مع مجلده</span>
-<span class="code-command">sudo</span> <span class="code-command">userdel</span> <span class="code-flag">-r</span> <span class="code-arg">olduser</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════ -->
-<!--  المستوى: احترافي (Expert)            -->
-<!-- ═══════════════════════════════════════ -->
-<div class="section-title" data-level="expert">🏆 أوامر الاحترافيين</div>
-
-<!-- docker -->
-<div class="command-card" data-level="expert" data-search="docker container image run build compose containerization">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">docker</span>
-    <span class="command-desc">إدارة الحاويات (Containers)</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُشغّل ويُدير حاويات Docker — تقنية العزل والنشر الحديثة.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض الحاويات الجارية</span>
-<span class="code-command">docker</span> <span class="code-command">ps</span>
-
-<span class="code-comment"># عرض جميع الحاويات (متوقفة وجارية)</span>
-<span class="code-command">docker</span> <span class="code-command">ps</span> <span class="code-flag">-a</span>
-
-<span class="code-comment"># تشغيل حاوية جديدة</span>
-<span class="code-command">docker</span> <span class="code-command">run</span> <span class="code-flag">-d</span> <span class="code-flag">-p</span> <span class="code-number">80:80</span> <span class="code-flag">--name</span> <span class="code-arg">mynginx</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># إيقاف حاوية</span>
-<span class="code-command">docker</span> <span class="code-command">stop</span> <span class="code-arg">mynginx</span>
-
-<span class="code-comment"># حذف حاوية</span>
-<span class="code-command">docker</span> <span class="code-command">rm</span> <span class="code-arg">mynginx</span>
-
-<span class="code-comment"># بناء صورة من Dockerfile</span>
-<span class="code-command">docker</span> <span class="code-command">build</span> <span class="code-flag">-t</span> <span class="code-arg">myapp:latest</span> <span class="code-arg">.</span>
-
-<span class="code-comment"># عرض الصور المحملة</span>
-<span class="code-command">docker</span> <span class="code-command">images</span>
-
-<span class="code-comment"># تنفيذ أمر داخل حاوية جارية</span>
-<span class="code-command">docker</span> <span class="code-command">exec</span> <span class="code-flag">-it</span> <span class="code-arg">mynginx</span> <span class="code-command">bash</span>
-
-<span class="code-comment"># عرض سجلات حاوية</span>
-<span class="code-command">docker</span> <span class="code-command">logs</span> <span class="code-flag">-f</span> <span class="code-arg">mynginx</span>
-
-<span class="code-comment"># Docker Compose: تشغيل جميع الخدمات</span>
-<span class="code-command">docker-compose</span> <span class="code-command">up</span> <span class="code-flag">-d</span>
-
-<span class="code-comment"># Docker Compose: إيقاف جميع الخدمات</span>
-<span class="code-command">docker-compose</span> <span class="code-command">down</span></code></pre>
-    </div>
-    <div class="tip-box"><strong>🐳 Docker Compose:</strong> يُستخدم لإدارة عدة حاويات معاً (مثال: web + db + cache)</div>
-  </div>
-</div>
-
-<!-- nginx -->
-<div class="command-card" data-level="expert" data-search="nginx web server reverse proxy config ssl https">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">nginx</span>
-    <span class="command-desc">إدارة خادم الويب Nginx</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">خادم ويب ووكيل عكسي (Reverse Proxy) قوي وسريع.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># اختبار إعدادات Nginx</span>
-<span class="code-command">sudo</span> <span class="code-command">nginx</span> <span class="code-flag">-t</span>
-
-<span class="code-comment"># إعادة تحميل الإعدادات</span>
-<span class="code-command">sudo</span> <span class="code-command">systemctl</span> <span class="code-command">reload</span> <span class="code-arg">nginx</span>
-
-<span class="code-comment"># عرض الإعدادات الافتراضية</span>
-<span class="code-command">cat</span> <span class="code-arg">/etc/nginx/nginx.conf</span>
-
-<span class="code-comment"># إنشاء موقع جديد</span>
-<span class="code-command">sudo</span> <span class="code-command">nano</span> <span class="code-arg">/etc/nginx/sites-available/mysite</span>
-
-<span class="code-comment"># تفعيل الموقع (إنشاء رابط رمزي)</span>
-<span class="code-command">sudo</span> <span class="code-command">ln</span> <span class="code-flag">-s</span> <span class="code-arg">/etc/nginx/sites-available/mysite</span> <span class="code-arg">/etc/nginx/sites-enabled/</span>
-
-<span class="code-comment"># إعداد Reverse Proxy</span>
-<span class="code-keyword">location</span> <span class="code-arg">/api/</span> {
-    <span class="code-keyword">proxy_pass</span> <span class="code-string">http://localhost:3000;</span>
-    <span class="code-keyword">proxy_set_header</span> <span class="code-string">Host</span> <span class="code-string">$host;</span>
-}</code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- git -->
-<div class="command-card" data-level="expert" data-search="git version control commit push pull branch merge clone">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">git</span>
-    <span class="command-desc">إدارة الإصدارات (Version Control)</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُدير تاريخ التعديلات على الكود ويُتيح التعاون بين المطورين.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># استنساخ مستودع</span>
-<span class="code-command">git</span> <span class="code-command">clone</span> <span class="code-string">"https://github.com/user/repo.git"</span>
-
-<span class="code-comment"># إضافة ملفات للمرحلة (Staging)</span>
-<span class="code-command">git</span> <span class="code-command">add</span> <span class="code-arg">.</span>
-
-<span class="code-comment"># حفظ التعديلات (Commit)</span>
-<span class="code-command">git</span> <span class="code-command">commit</span> <span class="code-flag">-m</span> <span class="code-string">"وصف التعديل"</span>
-
-<span class="code-comment"># رفع التعديلات</span>
-<span class="code-command">git</span> <span class="code-command">push</span> <span class="code-arg">origin</span> <span class="code-arg">main</span>
-
-<span class="code-comment"># سحب آخر التعديلات</span>
-<span class="code-command">git</span> <span class="code-command">pull</span> <span class="code-arg">origin</span> <span class="code-arg">main</span>
-
-<span class="code-comment"># إنشاء فرع جديد</span>
-<span class="code-command">git</span> <span class="code-command">checkout</span> <span class="code-flag">-b</span> <span class="code-arg">feature-branch</span>
-
-<span class="code-comment"># دمج فرع مع الفرع الحالي</span>
-<span class="code-command">git</span> <span class="code-command">merge</span> <span class="code-arg">feature-branch</span>
-
-<span class="code-comment"># عرض حالة المستودع</span>
-<span class="code-command">git</span> <span class="code-command">status</span>
-
-<span class="code-comment"># عرض سجل التعديلات</span>
-<span class="code-command">git</span> <span class="code-command">log</span> <span class="code-flag">--oneline</span> <span class="code-flag">--graph</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- certbot -->
-<div class="command-card" data-level="expert" data-search="certbot ssl https certificate letsencrypt renew">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">certbot</span>
-    <span class="command-desc">شهادات SSL مجانية (Let's Encrypt)</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُولّد ويُجدّد شهادات SSL/TLS مجانية من Let's Encrypt.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تثبيت Certbot</span>
-<span class="code-command">sudo</span> <span class="code-command">apt</span> <span class="code-command">install</span> <span class="code-arg">certbot</span> <span class="code-arg">python3-certbot-nginx</span> <span class="code-flag">-y</span>
-
-<span class="code-comment"># إصدار شهادة جديدة</span>
-<span class="code-command">sudo</span> <span class="code-command">certbot</span> <span class="code-flag">--nginx</span> <span class="code-flag">-d</span> <span class="code-arg">example.com</span> <span class="code-flag">-d</span> <span class="code-arg">www.example.com</span>
-
-<span class="code-comment"># تجديد الشهادات يدوياً</span>
-<span class="code-command">sudo</span> <span class="code-command">certbot</span> <span class="code-command">renew</span>
-
-<span class="code-comment"># اختبار التجديد التلقائي</span>
-<span class="code-command">sudo</span> <span class="code-command">certbot</span> <span class="code-command">renew</span> <span class="code-flag">--dry-run</span>
-
-<span class="code-comment"># عرض الشهادات المثبتة</span>
-<span class="code-command">sudo</span> <span class="code-command">certbot</span> <span class="code-command">certificates</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- rsync -->
-<div class="command-card" data-level="expert" data-search="rsync sync backup transfer remote incremental">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">rsync</span>
-    <span class="command-desc">مزامنة ونسخ احتياطي متقدم</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">ينقل الملفات بكفاءة عالية — ينقل فقط التغييرات (incremental).</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># نسخ محلي مع الحفاظ على الصلاحيات</span>
-<span class="code-command">rsync</span> <span class="code-flag">-avz</span> <span class="code-arg">/source/</span> <span class="code-arg">/backup/</span>
-
-<span class="code-comment"># نسخ إلى سيرفر بعيد</span>
-<span class="code-command">rsync</span> <span class="code-flag">-avz</span> <span class="code-flag">-e</span> <span class="code-string">"ssh"</span> <span class="code-arg">/local/folder/</span> <span class="code-arg">user@server:/remote/folder/</span>
-
-<span class="code-comment"># نسخ مع حذف الملفات غير الموجودة في المصدر</span>
-<span class="code-command">rsync</span> <span class="code-flag">-avz</span> <span class="code-flag">--delete</span> <span class="code-arg">/source/</span> <span class="code-arg">/backup/</span>
-
-<span class="code-comment"># نسخ مع استبعاد ملفات معينة</span>
-<span class="code-command">rsync</span> <span class="code-flag">-avz</span> <span class="code-flag">--exclude</span> <span class="code-string">"*.log"</span> <span class="code-arg">/source/</span> <span class="code-arg">/backup/</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- tmux -->
-<div class="command-card" data-level="expert" data-search="tmux terminal multiplexer session detach attach">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">tmux</span>
-    <span class="command-desc">جلسات طرفية متعددة</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُتيح تشغيل عدة جلسات طرفية في نافذة واحدة — لا تفقد عملك عند قطع الاتصال.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># بدء جلسة جديدة</span>
-<span class="code-command">tmux</span> <span class="code-command">new</span> <span class="code-flag">-s</span> <span class="code-arg">mysession</span>
-
-<span class="code-comment"># فصل الجلسة (العمل يستمر في الخلفية)</span>
-<span class="code-keyword">Ctrl</span>+<span class="code-keyword">B</span> ثم <span class="code-keyword">D</span>
-
-<span class="code-comment"># عرض الجلسات</span>
-<span class="code-command">tmux</span> <span class="code-command">ls</span>
-
-<span class="code-comment"># إعادة الاتصال بجلسة</span>
-<span class="code-command">tmux</span> <span class="code-command">attach</span> <span class="code-flag">-t</span> <span class="code-arg">mysession</span>
-
-<span class="code-comment"># إنشاء نافذة جديدة داخل الجلسة</span>
-<span class="code-keyword">Ctrl</span>+<span class="code-keyword">B</span> ثم <span class="code-keyword">C</span>
-
-<span class="code-comment"># التنقل بين النوافذ</span>
-<span class="code-keyword">Ctrl</span>+<span class="code-keyword">B</span> ثم <span class="code-keyword">N</span> (التالي) أو <span class="code-keyword">P</span> (السابق)
-
-<span class="code-comment"># تقسيم الشاشة أفقياً</span>
-<span class="code-keyword">Ctrl</span>+<span class="code-keyword">B</span> ثم <span class="code-keyword">"</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- lsof -->
-<div class="command-card" data-level="expert" data-search="lsof list open files process port lock">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">lsof</span>
-    <span class="command-desc">عرض الملفات المفتوحة</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُظهر الملفات المفتوحة حالياً والعمليات التي تستخدمها.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># عرض جميع الملفات المفتوحة</span>
-<span class="code-command">lsof</span>
-
-<span class="code-comment"># البحث عن عملية تستخدم منفذ معين</span>
-<span class="code-command">lsof</span> <span class="code-flag">-i</span> <span class="code-arg">:80</span>
-
-<span class="code-comment"># عرض الملفات المفتوحة لعملية معينة</span>
-<span class="code-command">lsof</span> <span class="code-flag">-p</span> <span class="code-number">1234</span>
-
-<span class="code-comment"># عرض الملفات المفتوحة في مجلد</span>
-<span class="code-command">lsof</span> <span class="code-flag">+D</span> <span class="code-arg">/var/log</span>
-
-<span class="code-comment"># عرض الملفات المحذوفة لكنها مفتوحة</span>
-<span class="code-command">lsof</span> <span class="code-flag">+L1</span></code></pre>
-    </div>
-  </div>
-</div>
-
-<!-- strace -->
-<div class="command-card" data-level="expert" data-search="strace trace system calls debug process">
-  <div class="command-header" onclick="toggleCard(this)">
-    <span class="command-name">strace</span>
-    <span class="command-desc">تتبع مكالمات النظام (Debugging)</span>
-    <span class="command-tag tag-expert">احترافي</span>
-    <span class="toggle-icon">▼</span>
-  </div>
-  <div class="command-body">
-    <div class="command-explanation">يُتبّع مكالمات النظام (system calls) التي يُجريها برنامج — مفيد جداً للتصحيح.</div>
-    <div class="code-wrapper">
-      <button class="copy-btn" onclick="copyCode(this)">📋 نسخ</button>
-      <pre><code><span class="code-comment"># تتبع برنامج</span>
-<span class="code-command">strace</span> <span class="code-arg">./myapp</span>
-
-<span class="code-comment"># تتبع عملية جارية</span>
-<span class="code-command">strace</span> <span class="code-flag">-p</span> <span class="code-number">1234</span>
-
-<span class="code-comment"># تتبع فقط مكالمات الملفات</span>
-<span class="code-command">strace</span> <span class="code-flag">-e</span> <span class="code-string">trace=file</span> <span class="code-arg">./myapp</span>
-
-<span class="code-comment"># حفظ التتبع في ملف</span>
-<span class="code-command">strace</span> <span class="code-flag">-o</span> <span class="code-arg">trace.log</span> <span class="code-arg">./myapp</span></code></pre>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<!-- زر العودة للأعلى -->
-<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆️</button>
-
-<!-- ═══════════════════════════════════════ -->
-<!--         FOOTER                         -->
-<!-- ═══════════════════════════════════════ -->
+<!-- ═══ تبويبات المستويات ═══ -->
+<nav class="tabs" aria-label="Levels">
+  <button class="tab active" data-level="all" type="button" aria-pressed="true">📚 <span data-i="tab_all">الكل</span></button>
+  <button class="tab" data-level="basic" type="button" aria-pressed="false">🌱 <span data-i="tab_basic">مبتدئ</span></button>
+  <button class="tab" data-level="intermediate" type="button" aria-pressed="false">🌿 <span data-i="tab_intermediate">متوسط</span></button>
+  <button class="tab" data-level="advanced" type="button" aria-pressed="false">🌳 <span data-i="tab_advanced">متقدم</span></button>
+  <button class="tab" data-level="expert" type="button" aria-pressed="false">🏆 <span data-i="tab_expert">احترافي</span></button>
+</nav>
+
+<!-- ═══ المحتوى ═══ -->
+<main class="container">
+  <div id="commands"></div>
+  <p id="noResults" class="no-results" hidden>🍃 <span data-i="noResults">لا نتائج — جرّب كلمة أخرى…</span></p>
+</main>
+
+<button id="toTop" class="to-top" type="button" aria-label="Back to top">⬆️</button>
+<span id="live" class="sr-only" aria-live="polite"></span>
+
+<!-- ═══ Footer ═══ -->
 <footer class="footer">
-  <p>مرجع أوامر السيرفر | Server Commands Reference</p>
-  <p style="margin-top:0.5rem; opacity:0.7;">Built with ❤️ | ayoub.pw</p>
+  <div class="f-bar" aria-hidden="true"></div>
+  <img class="f-logo" src="https://ik.imagekit.io/imgayoub/LOGO/ayoub.pw%20logo%20many%20size/no%20background/android-chrome-192x192.png?updatedAt=1778461922147" alt="" width="46" height="46">
+  <p class="f-motto"><span class="gradient-text" data-i="footer">صُنع بحب وقهوة</span> <span aria-hidden="true">❤️☕</span></p>
+  <p class="f-line">Server Commands Reference · <a href="https://ayoub.pw" target="_blank" rel="noopener">ayoub.pw</a> · <span id="year"></span></p>
 </footer>
 
-<!-- ═══════════════════════════════════════ -->
-<!--         JAVASCRIPT                     -->
-<!-- ═══════════════════════════════════════ -->
 <script>
-// ═══════════════════════════════════════════
-//  JavaScript — وظائف الصفحة التفاعلية
-// ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════
+   البيانات — كل أمر بسطر واحد (ثنائي اللغة)
+   ═══════════════════════════════════════════ */
+const D=(id,lv,n,enD,arD,enA,arA,code,enT,arT)=>({
+  id,lv,n,
+  en:{d:enD,a:enA,t:enT||""}, ar:{d:arD,a:arA,t:arT||""},
+  hay:(id+" "+n+" "+enD+" "+arD+" "+enA+" "+arA).toLowerCase()
+});
 
-/**
- * toggleCard(cardHeader)
- * ─── فتح/إغلاق بطاقة الأمر عند الضغط عليها ───
- * @param {HTMLElement} cardHeader — عنصر الرأس الذي تم النقر عليه
- */
-function toggleCard(cardHeader) {
-    const card = cardHeader.parentElement;
-    card.classList.toggle('expanded');
+const C=[
+D("ls","basic","ls","List directory contents","عرض محتويات المجلد","Shows files and folders in the current path.","يُستخدم لعرض الملفات والمجلدات الموجودة في المسار الحالي.",
+`# List files
+ls
+
+# Long listing with details
+ls -la
+
+# Sort by size (largest first)
+ls -lhS`,
+"Short flags combine: -l = details, -a = show hidden files.","الاختصار -la يعني: l = تفاصيل، a = إظهار الملفات المخفية."),
+
+D("cd","basic","cd","Change the current directory","تغيير المجلد الحالي","Moves between folders in the filesystem.","يُستخدم للتنقل بين المجلدات في نظام الملفات.",
+`# Go to a folder
+cd /var/www/html
+
+# Up one level
+cd ..
+
+# Go to home
+cd ~
+
+# Back to the previous folder
+cd -`),
+
+D("pwd","basic","pwd","Print working directory","عرض المسار الحالي","Prints the full path of the folder you are in.","يطبع المسار الكامل للمجلد الذي أنت فيه حالياً.",
+`# Current path
+pwd
+
+# Physical path (resolves symlinks)
+pwd -P`),
+
+D("mkdir","basic","mkdir","Create directories","إنشاء مجلد جديد","Creates new folders, nested or with permissions.","يُنشئ مجلد/مجلدات جديدة في المسار المحدد.",
+`# One folder
+mkdir my-project
+
+# Nested folders
+mkdir -p projects/web/app
+
+# With permissions
+mkdir -m 755 public`),
+
+D("rm","basic","rm","Remove files or folders","حذف ملف أو مجلد","Deletes files and folders — there is no trash bin in Linux.","يحذف الملفات والمجلدات. احذر! لا يوجد سلة محذوفات في Linux.",
+`# Delete a file
+rm file.txt
+
+# Force-delete a folder and contents
+rm -rf old-folder/
+
+# Ask before each delete
+rm -i important.txt`,
+"⚠️ rm -rf / wipes the whole server — never run it!","⚠️ rm -rf / سيحذف كل شيء في السيرفر! لا تستخدمه أبداً!"),
+
+D("cp","basic","cp","Copy files or folders","نسخ ملف أو مجلد","Copies files and folders from one place to another.","ينسخ الملفات والمجلدات من مكان إلى آخر.",
+`# Copy a file
+cp source.txt destination.txt
+
+# Copy a folder recursively
+cp -r folder1/ folder2/
+
+# Preserve permissions & dates
+cp -a backup/ archive/`),
+
+D("mv","basic","mv","Move or rename","نقل أو إعادة تسمية","Moves files/folders or renames them.","يُستخدم لنقل الملفات/المجلدات أو إعادة تسميتها.",
+`# Rename
+mv oldname.txt newname.txt
+
+# Move to another folder
+mv file.txt /home/user/documents/
+
+# Move a whole folder
+mv project/ /var/www/`),
+
+D("cat","basic","cat","View file contents","عرض محتوى ملف","Reads and prints text files in the terminal.","يقرأ ويعرض محتوى الملفات النصية في الطرفية.",
+`# Show a file
+cat config.txt
+
+# First 10 lines
+cat log.txt | head -n 10
+
+# Merge two files
+cat file1.txt file2.txt > combined.txt`),
+
+D("touch","basic","touch","Create empty files","إنشاء ملف فارغ","Creates empty files or updates a file timestamp.","يُنشئ ملفاً فارغاً جديداً، أو يحدّث تاريخ آخر تعديل لملف موجود.",
+`# One empty file
+touch newfile.txt
+
+# Several at once
+touch file1.txt file2.txt file3.txt
+
+# Update timestamp only
+touch -m existing.txt`),
+
+D("nano","basic","nano","Simple text editor","محرر نصوص بسيط","An easy terminal text editor — perfect for beginners.","محرر نصوص سهل الاستخدام في الطرفية، مثالي للمبتدئين.",
+`# Open a file
+nano config.txt
+
+# With line numbers
+nano -l script.sh
+
+# Ctrl+O save | Ctrl+X exit | Ctrl+K cut line`,
+"Press Ctrl+X then Y to save and exit.","للخروج اضغط Ctrl+X ثم Y للحفظ."),
+
+D("clear","basic","clear","Clear the terminal","مسح شاشة الطرفية","Wipes the terminal screen for a fresh start.","يمسح كل النصوص من شاشة الطرفية ليعطيك مساحة نظيفة.",
+`# Clear the screen
+clear
+
+# Faster shortcut
+Ctrl + L`),
+
+D("head-tail","basic","head / tail","Show beginning or end of a file","عرض بداية أو نهاية ملف","head prints the first lines, tail the last ones — great for logs.","head يعرض أول الأسطر و tail آخرها — مثالية للسجلات.",
+`# First 20 lines
+head -n 20 file.log
+
+# Last 20 lines
+tail -n 20 file.log
+
+# Follow a log live
+tail -f /var/log/syslog`,
+"tail -f is the sysadmin's best friend for live logs.","tail -f صديق مدير السيرفر الأول لمتابعة السجلات مباشرة."),
+
+D("history","basic","history","Show command history","عرض سجل الأوامر","Lists previously executed commands and can re-run them.","يعرض الأوامر التي نفذتها سابقاً ويمكنه إعادة تشغيلها.",
+`# Show history
+history
+
+# Re-run command #512
+!512
+
+# Search history interactively
+Ctrl + R
+
+# Clear history
+history -c`),
+
+D("chmod","intermediate","chmod","Change file permissions","تغيير صلاحيات الملف","Controls who can read, write, or execute a file.","يتحكم في من يمكنه قراءة/كتابة/تنفيذ الملف.",
+`# Everyone: read+write+execute
+chmod 777 file.sh
+
+# Owner full, others read+execute
+chmod 755 script.sh
+
+# Add execute permission
+chmod +x app
+
+# Recursively
+chmod -R 755 /var/www`,
+"Permissions: 7=rwx | 6=rw- | 5=r-x | 4=r-- | 0=---","📊 جدول الصلاحيات: 7=rwx | 6=rw- | 5=r-x | 4=r-- | 0=---"),
+
+D("chown","intermediate","chown","Change file owner","تغيير مالك الملف","Changes the user and group that own a file or folder.","يُغيّر المستخدم والمجموعة المالكين للملف أو المجلد.",
+`# Change owner
+chown user file.txt
+
+# Owner and group
+chown user:group file.txt
+
+# Recursively
+chown -R www-data:www-data /var/www`),
+
+D("grep","intermediate","grep","Search text in files","البحث عن نص داخل الملفات","Powerful tool to find text patterns in files or command output.","أداة قوية للبحث عن أنماط نصية داخل الملفات أو مخرجات الأوامر.",
+`# Find a word
+grep "error" log.txt
+
+# Case-insensitive
+grep -i "warning" *.log
+
+# Show line numbers
+grep -n "failed" syslog
+
+# Invert match (everything else)
+grep -v "success" output.log`),
+
+D("find","intermediate","find","Search files and folders","البحث عن ملفات ومجلدات","Finds files by name, size, or modification time.","يبحث عن الملفات والمجلدات بناءً على معايير متنوعة (الاسم، الحجم، التاريخ).",
+`# By name
+find /home -name "*.txt"
+
+# Larger than 100MB
+find /var/log -size +100M
+
+# Modified more than 7 days ago
+find . -mtime +7
+
+# Find and delete old files
+find /tmp -name "*.tmp" -delete`),
+
+D("tar","intermediate","tar","Archive and compress","أرشفة وضغط الملفات","Creates tarballs, optionally compressed with gzip or bzip2.","يُنشئ أرشيفات ويضغطها بـ gzip أو bzip2.",
+`# Create a compressed archive
+tar -czvf backup.tar.gz folder/
+
+# Extract an archive
+tar -xzvf backup.tar.gz
+
+# List contents without extracting
+tar -tzvf archive.tar.gz
+
+# Plain archive (no compression)
+tar -cvf files.tar file1 file2`,
+"c=create | x=extract | z=gzip | v=verbose | f=file","🔑 حفظ الاختصارات: c=create | x=extract | z=gzip | v=verbose | f=file"),
+
+D("df","intermediate","df","Show disk space","عرض مساحة القرص","Shows available and used space per filesystem.","يُظهر مساحة القرص المتاحة والمستخدمة لكل نظام ملفات.",
+`# Human-readable sizes
+df -h
+
+# Include filesystem type
+df -Th
+
+# Specific path
+df -h /var`),
+
+D("du","intermediate","du","Show folder sizes","عرض حجم المجلدات","Estimates file and folder disk usage.","يُقدّر حجم الملفات والمجلدات ويُظهر استهلاك القرص.",
+`# Size of one folder
+du -sh /var/log
+
+# All folders here, sorted
+du -sh * | sort -rh
+
+# Big files only (>100MB)
+du -ah /var | grep '[0-9]00M\\|G\\s'`),
+
+D("ps","intermediate","ps","List running processes","عرض العمليات الجارية","Shows processes currently running on the system.","يُظهر العمليات (processes) التي تعمل حالياً في النظام.",
+`# All processes
+ps aux
+
+# Find a specific one
+ps aux | grep "nginx"
+
+# Process tree
+ps auxf`),
+
+D("top","intermediate","top / htop","Monitor system resources","مراقبة موارد النظام","Live view of CPU, RAM, and processes. htop is prettier and easier.","يُظهران استهلاك CPU وRAM والعمليات في الوقت الفعلي. htop أجمل وأسهل.",
+`# Classic monitor
+top
+
+# Install htop (nicer UI)
+sudo apt install htop -y
+
+# Run htop
+htop
+
+# Sort by memory
+top -o %MEM`,
+"Shortcuts: q=quit | k=kill | M=sort RAM | P=sort CPU","⌨️ اختصارات top: q=خروج | k=إيقاف عملية | M=ترتيب حسب RAM | P=ترتيب حسب CPU"),
+
+D("wget","intermediate","wget / curl","Download files / call APIs","تحميل الملفات من الإنترنت","Downloads from URLs. curl is stronger for APIs, wget easier for downloads.","يُحملان الملفات من URLs. curl أقوى ويدعم APIs، wget أسهل للتحميل المباشر.",
+`# Download with wget
+wget "https://example.com/file.zip"
+
+# Resume a download
+wget -c "https://example.com/bigfile.iso"
+
+# Download with curl
+curl -O "https://example.com/file.zip"
+
+# GET request
+curl "https://api.example.com/data"
+
+# POST with JSON
+curl -X POST -H "Content-Type: application/json" -d '{"key":"value"}' "https://api.example.com"`),
+
+D("systemctl","intermediate","systemctl","Manage system services","إدارة خدمات النظام","Controls services like nginx, ssh, mysql.","يُتحكم في خدمات النظام (services) مثل nginx, ssh, mysql.",
+`# Start a service
+sudo systemctl start nginx
+
+# Stop
+sudo systemctl stop nginx
+
+# Restart
+sudo systemctl restart nginx
+
+# Enable at boot
+sudo systemctl enable nginx
+
+# Status
+sudo systemctl status nginx
+
+# All running services
+systemctl list-units --type=service --state=running`),
+
+D("journalctl","intermediate","journalctl","View system logs","عرض سجلات النظام","Reads systemd logs — great for tracking errors.","يُعرض سجلات systemd وخدمات النظام. أداة قوية لتتبع الأخطاء.",
+`# All logs
+journalctl
+
+# One service
+journalctl -u nginx
+
+# Live logs
+journalctl -f -u nginx
+
+# Today only
+journalctl --since "today"
+
+# Since last boot
+journalctl -b`),
+
+D("free","intermediate","free","Show memory usage","عرض استخدام الذاكرة","Displays RAM and swap usage in a human-readable way.","يعرض استخدام الذاكرة RAM و swap بشكل مقروء.",
+`# Human-readable
+free -h
+
+# Update every 2 seconds
+free -h -s 2
+
+# Total in MB
+free -m`),
+
+D("kill","intermediate","kill","Terminate processes","إنهاء العمليات","Sends signals to processes — the polite way is TERM, the hard way is -9.","يُرسل إشارات للعمليات — الأسلوب المهذب TERM والقاسي ‎-9.",
+`# Kill by PID
+kill 1234
+
+# Force kill
+kill -9 1234
+
+# Kill by name
+pkill nginx
+
+# Kill all instances
+killall node`,
+"Try plain kill first; -9 skips cleanup.","جرّب kill العادي أولاً؛ ‎-9 يتخطى تنظيف العملية."),
+
+D("ln","intermediate","ln","Create links","إنشاء روابط","Creates symbolic (-s) or hard links between files.","يُنشئ روابط رمزية (-s) أو روابط صلبة بين الملفات.",
+`# Symbolic link
+ln -s /var/www/app current
+
+# Hard link
+ln file.txt file-hard.txt
+
+# Remove a symlink
+rm current`),
+
+D("ping","intermediate","ping","Test network connectivity","فحص الاتصال الشبكي","Checks if a host is reachable and measures latency.","يتحقق من إمكانية الوصول لسيرفر ويقيس زمن الاستجابة.",
+`# Ping a host (Ctrl+C to stop)
+ping google.com
+
+# Send only 4 packets
+ping -c 4 8.8.8.8
+
+# Interval of 2 seconds
+ping -i 2 example.com`),
+
+D("sudo","advanced","sudo","Run commands as root","تنفيذ أوامر بصلاحيات الجذر","Executes commands with superuser privileges. Requires a password.","يُنفّذ الأوامر بصلاحيات المستخدم الجذر (Root). يتطلب كلمة مرور.",
+`# Run as root
+sudo apt update
+
+# Open a root shell
+sudo -i
+
+# Run as another user
+sudo -u www-data whoami
+
+# Edit a protected file
+sudo nano /etc/nginx/nginx.conf
+
+# List your allowed commands
+sudo -l`,
+"⚠️ Only use sudo when needed. Avoid sudo rm -rf!","⚠️ لا تستخدم sudo إلا عند الحاجة. تجنب sudo rm -rf!"),
+
+D("ssh","advanced","ssh","Connect to remote servers","الاتصال بالسيرفر عن بُعد","Secure shell access to remote machines.","يُتيح الاتصال الآمن بالسيرفرات البعيدة عبر بروتوكول SSH.",
+`# Connect
+ssh user@192.168.1.100
+
+# Custom port
+ssh -p 2222 user@server.com
+
+# With a key
+ssh -i ~/.ssh/id_rsa user@server.com
+
+# Copy your key to the server
+ssh-copy-id user@server.com
+
+# Run a command remotely
+ssh user@server "ls -la /var/log"`),
+
+D("scp","advanced","scp","Copy files over SSH","نقل الملفات بين السيرفرات","Securely transfers files between machines.","ينقل الملفات بأمان بين جهازك والسيرفر عبر SSH.",
+`# Upload a file
+scp localfile.txt user@server:/home/user/
+
+# Upload a folder
+scp -r localfolder/ user@server:/var/www/
+
+# Download from server
+scp user@server:/var/log/syslog ./
+
+# Server to server
+scp user1@server1:/file.txt user2@server2:/path/`),
+
+D("crontab","advanced","crontab","Schedule tasks","جدولة المهام التلقائية","Runs commands automatically at set times (like nightly backups).","يُشغّل أوامر بشكل تلقائي في أوقات محددة (مثل النسخ الاحتياطي الليلي).",
+`# Edit schedule
+crontab -e
+
+# List scheduled tasks
+crontab -l
+
+# Daily backup at 2 AM
+0 2 * * * /home/user/backup.sh
+
+# Weekly cleanup
+0 0 * * 0 /home/user/cleanup.sh
+
+# Every 5 minutes
+*/5 * * * * /home/user/check.sh`,
+"min | hour | day | month | weekday (0=Sunday)","📅 ترتيب الأوقات: دقيقة | ساعة | يوم | شهر | يوم الأسبوع (0=الأحد)"),
+
+D("ss","advanced","netstat / ss","Inspect ports & connections","مراقبة الاتصالات والمنافذ","Shows active connections and open ports. ss is the modern tool.","يُظهران الاتصالات الشبكية النشطة والمنافذ المفتوحة. ss أحدث وأسرع.",
+`# All listening sockets
+ss -tuln
+
+# TCP listeners only
+ss -lnt
+
+# Find a specific port
+ss -tuln | grep ":80"
+
+# With owning processes
+ss -tulnp`),
+
+D("ufw","advanced","iptables / ufw","Manage the firewall","إدارة جدار الحماية","Controls network traffic. ufw is the easy frontend.","يتحكمان في حركة المرور الشبكية. ufw أسهل للاستخدام (Uncomplicated Firewall).",
+`# Enable UFW
+sudo ufw enable
+
+# Allow SSH
+sudo ufw allow 22/tcp
+
+# Allow HTTP & HTTPS
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+
+# Deny a port
+sudo ufw deny 3306
+
+# Status
+sudo ufw status verbose
+
+# Delete a rule
+sudo ufw delete allow 8080`),
+
+D("apt","advanced","apt / yum / dnf","Package managers","مدير الحزم","Installs, updates, removes software. apt for Debian/Ubuntu, yum/dnf for CentOS/RHEL.","يُثبّت، يُحدّث، ويُحذف البرامج. apt لـ Debian/Ubuntu، yum/dnf لـ CentOS/RHEL.",
+`# Update package lists
+sudo apt update
+
+# Upgrade everything
+sudo apt upgrade -y
+
+# Install a package
+sudo apt install nginx -y
+
+# Remove
+sudo apt remove nginx
+
+# Clean unused packages
+sudo apt autoremove -y
+
+# Search
+apt search mysql`),
+
+D("useradd","advanced","useradd / usermod","Manage users","إدارة المستخدمين","Creates and edits user accounts on the server.","يُنشئان ويُعدّلان حسابات المستخدمين على السيرفر.",
+`# Create user with home dir
+sudo useradd -m newuser
+
+# Set password
+sudo passwd newuser
+
+# Add to sudo group
+sudo usermod -aG sudo newuser
+
+# Change shell
+sudo usermod -s /bin/bash newuser
+
+# Delete user + home
+sudo userdel -r olduser`),
+
+D("docker","expert","docker","Manage containers","إدارة الحاويات","Runs and manages Docker containers — modern isolation & deployment.","يُشغّل ويُدير حاويات Docker — تقنية العزل والنشر الحديثة.",
+`# Running containers
+docker ps
+
+# All containers
+docker ps -a
+
+# Run a new container
+docker run -d -p 80:80 --name mynginx nginx
+
+# Stop / remove
+docker stop mynginx
+docker rm mynginx
+
+# Build an image
+docker build -t myapp:latest .
+
+# List images
+docker images
+
+# Shell inside a container
+docker exec -it mynginx bash
+
+# Container logs
+docker logs -f mynginx
+
+# Compose up / down
+docker-compose up -d
+docker-compose down`,
+"🐳 Compose manages multi-container stacks (web + db + cache).","🐳 Docker Compose: يُستخدم لإدارة عدة حاويات معاً (مثال: web + db + cache)"),
+
+D("nginx","expert","nginx","Web server & reverse proxy","إدارة خادم الويب Nginx","Fast web server and reverse proxy.","خادم ويب ووكيل عكسي (Reverse Proxy) قوي وسريع.",
+`# Test configuration
+sudo nginx -t
+
+# Reload config
+sudo systemctl reload nginx
+
+# Default config
+cat /etc/nginx/nginx.conf
+
+# New site
+sudo nano /etc/nginx/sites-available/mysite
+
+# Enable the site
+sudo ln -s /etc/nginx/sites-available/mysite /etc/nginx/sites-enabled/
+
+# Reverse proxy
+location /api/ {
+    proxy_pass http://localhost:3000;
+    proxy_set_header Host $host;
+}`),
+
+D("git","expert","git","Version control","إدارة الإصدارات","Tracks code history and enables collaboration.","يُدير تاريخ التعديلات على الكود ويُتيح التعاون بين المطورين.",
+`# Clone a repo
+git clone "https://github.com/user/repo.git"
+
+# Stage changes
+git add .
+
+# Commit
+git commit -m "feat: describe the change"
+
+# Push / pull
+git push origin main
+git pull origin main
+
+# New branch
+git checkout -b feature-branch
+
+# Merge
+git merge feature-branch
+
+# Status / log
+git status
+git log --oneline --graph`),
+
+D("certbot","expert","certbot","Free SSL certificates","شهادات SSL مجانية","Generates and renews free Let's Encrypt certificates.","يُولّد ويُجدّد شهادات SSL/TLS مجانية من Let's Encrypt.",
+`# Install
+sudo apt install certbot python3-certbot-nginx -y
+
+# Issue a certificate
+sudo certbot --nginx -d example.com -d www.example.com
+
+# Renew manually
+sudo certbot renew
+
+# Test auto-renewal
+sudo certbot renew --dry-run
+
+# List certificates
+sudo certbot certificates`),
+
+D("rsync","expert","rsync","Smart sync & backup","مزامنة ونسخ احتياطي متقدم","Transfers efficiently — only the changes (incremental).","ينقل الملفات بكفاءة عالية — ينقل فقط التغييرات (incremental).",
+`# Local sync preserving attributes
+rsync -avz /source/ /backup/
+
+# To a remote server
+rsync -avz -e "ssh" /local/folder/ user@server:/remote/folder/
+
+# Mirror (delete removed files)
+rsync -avz --delete /source/ /backup/
+
+# Exclude patterns
+rsync -avz --exclude "*.log" /source/ /backup/`),
+
+D("tmux","expert","tmux","Terminal multiplexer","جلسات طرفية متعددة","Multiple terminal sessions in one window — work survives disconnects.","يُتيح تشغيل عدة جلسات طرفية في نافذة واحدة — لا تفقد عملك عند قطع الاتصال.",
+`# New session
+tmux new -s mysession
+
+# Detach (work continues)
+Ctrl+B then D
+
+# List sessions
+tmux ls
+
+# Reattach
+tmux attach -t mysession
+
+# New window
+Ctrl+B then C
+
+# Switch windows
+Ctrl+B then N (next) / P (previous)
+
+# Split horizontally
+Ctrl+B then "`),
+
+D("lsof","expert","lsof","List open files","عرض الملفات المفتوحة","Shows open files and which processes use them.","يُظهر الملفات المفتوحة حالياً والعمليات التي تستخدمها.",
+`# Everything open
+lsof
+
+# Who uses port 80
+lsof -i :80
+
+# Files open by a PID
+lsof -p 1234
+
+# Open files under a folder
+lsof +D /var/log
+
+# Deleted but still open
+lsof +L1`),
+
+D("strace","expert","strace","Trace system calls","تتبع مكالمات النظام","Traces the system calls a program makes — superb for debugging.","يُتبّع مكالمات النظام (system calls) التي يُجريها برنامج — مفيد جداً للتصحيح.",
+`# Trace a program
+strace ./myapp
+
+# Attach to a running process
+strace -p 1234
+
+# File-related calls only
+strace -e trace=file ./myapp
+
+# Save trace to a file
+strace -o trace.log ./myapp`)
+];
+
+/* ═══════════════════════════════════════════
+   i18n — الترجمة الكاملة للواجهة
+   ═══════════════════════════════════════════ */
+const I18N={
+ar:{docTitle:"مرجع أوامر السيرفر 🖥️ | Reesha",title:"مرجع أوامر السيرفر",brand:"مرجع الأوامر",
+eyebrow:"دليلك المورقي من أول sudo حتى الاحتراف",heroSub:"من التعلم إلى الاحترافية — Linux · Sudo · Docker · Git · Nginx · UFW",
+searchPh:"ابحث عن أمر… (chmod, docker, nginx)",expandAll:"فتح الكل",collapseAll:"طي الكل",
+tab_all:"الكل",tab_basic:"مبتدئ",tab_intermediate:"متوسط",tab_advanced:"متقدم",tab_expert:"احترافي",
+sec_basic:"أوامر المبتدئين",sec_intermediate:"أوامر المستوى المتوسط",sec_advanced:"أوامر المتقدّمين",sec_expert:"أوامر المحترفين",
+cotd:"أمر اليوم",noResults:"لا نتائج — جرّب كلمة أخرى…",copy:"نسخ",copied:"تم!",
+footer:"صُنع بحب وقهوة",results:"نتيجة"},
+en:{docTitle:"Server Commands Reference 🖥️ | Reesha",title:"Server Commands Reference",brand:"Commands Reference",
+eyebrow:"Your leafy guide from first sudo to full mastery",heroSub:"From learning to mastery — Linux · Sudo · Docker · Git · Nginx · UFW",
+searchPh:"Search a command… (chmod, docker, nginx)",expandAll:"Expand all",collapseAll:"Collapse all",
+tab_all:"All",tab_basic:"Beginner",tab_intermediate:"Intermediate",tab_advanced:"Advanced",tab_expert:"Expert",
+sec_basic:"Beginner Commands",sec_intermediate:"Intermediate Commands",sec_advanced:"Advanced Commands",sec_expert:"Expert Commands",
+cotd:"Command of the day",noResults:"Nothing found — try another keyword…",copy:"Copy",copied:"Copied!",
+footer:"Made with love and coffee",results:"results"}};
+
+/* ═══════════════════════════════════════════
+   الحالة والأدوات
+   ═══════════════════════════════════════════ */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const ORDER=["basic","intermediate","advanced","expert"];
+const LV={all:{e:"📚"},basic:{e:"🌱"},intermediate:{e:"🌿"},advanced:{e:"🌳"},expert:{e:"🏆"}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+const state={lang:localStorage.getItem("reesha-lang")||"ar",level:"all",query:"",open:new Set(["ls"])};
+let cotdSeed=Math.floor(Date.now()/864e5);
+const searchInput=$("#search");
+
+/* ─── تلوين الكود تلقائياً (تعليقات/أوامر/نصوص/فلاجز/أرقام) ─── */
+function hl(code){
+  return code.split("\n").map(line=>{
+    const t=line.trim();
+    if(!t)return "";
+    if(t.startsWith("#"))return '<span class="tk-c">'+esc(line)+"</span>";
+    const m=line.match(/^(\s*)(\S+)/);
+    if(!m)return esc(line);
+    const tok=m[2];
+    let head;
+    if(/^-/.test(tok))head='<span class="tk-f">'+esc(tok)+"</span>";
+    else if(/^[\d*]/.test(tok))head='<span class="tk-n">'+esc(tok)+"</span>";
+    else head='<span class="tk-k">'+esc(tok)+"</span>";
+    let rest=esc(line.slice(m[0].length));
+    rest=rest.replace(/"[^"]*"|'[^']*'/g,x=>'<span class="tk-s">'+x+"</span>");
+    rest=rest.replace(/(^|[\s:])(-{1,2}[A-Za-z][\w-]*)/g,'$1<span class="tk-f">$2</span>');
+    rest=rest.replace(/(^|[\s:])(\d+(?:\.\d+)?[KMG]?)(?=[\s:;/]|$)/g,'$1<span class="tk-n">$2</span>');
+    return head+rest;
+  }).join("\n");
 }
 
-/**
- * copyCode(btn)
- * ─── نسخ الكود إلى الحافظة ───
- * @param {HTMLElement} btn — زر النسخ الذي تم النقر عليه
- */
-function copyCode(btn) {
-    // الحصول على عنصر pre داخل نفس الـ code-wrapper
-    const wrapper = btn.closest('.code-wrapper');
-    const pre = wrapper.querySelector('pre');
-
-    // استخراج النص بدون تنسيق HTML (نأخذ textContent)
-    let codeText = pre.textContent;
-
-    // نسخ إلى الحافظة
-    navigator.clipboard.writeText(codeText).then(() => {
-        // تغيير نص الزر مؤقتاً
-        const originalText = btn.innerHTML;
-        btn.innerHTML = '✅ تم النسخ!';
-        btn.classList.add('copied');
-
-        // إعادة الزر لحالته الأصلية بعد 2 ثانية
-        setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('copied');
-        }, 2000);
-    }).catch(err => {
-        // fallback للمتصفحات القديمة
-        const textarea = document.createElement('textarea');
-        textarea.value = codeText;
-        textarea.style.position = 'fixed';
-        textarea.style.opacity = '0';
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-
-        btn.innerHTML = '✅ تم النسخ!';
-        btn.classList.add('copied');
-        setTimeout(() => {
-            btn.innerHTML = '📋 نسخ';
-            btn.classList.remove('copied');
-        }, 2000);
-    });
+/* ─── تظليل نتائج البحث ─── */
+function hi(text,q){
+  const t=esc(text);
+  if(!q)return t;
+  const sq=esc(q).replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+  return t.replace(new RegExp("("+sq+")","gi"),"<mark>$1</mark>");
 }
 
-/**
- * ─── تبويبات المستويات ───
- * عند النقر على تبويب، نعرض/نخفي الأوامر حسب المستوى
- */
-document.querySelectorAll('.level-tab').forEach(tab => {
-    tab.addEventListener('click', function() {
-        // إزالة active من جميع التبويبات
-        document.querySelectorAll('.level-tab').forEach(t => t.classList.remove('active'));
-        // إضافة active للتبويب المُنقر
-        this.classList.add('active');
-
-        const level = this.dataset.level;
-        const cards = document.querySelectorAll('.command-card');
-        const sections = document.querySelectorAll('.section-title');
-
-        if (level === 'all') {
-            // عرض الكل
-            cards.forEach(c => { c.style.display = ''; });
-            sections.forEach(s => { s.style.display = ''; });
-        } else {
-            // عرض فقط الأوامر المطابقة للمستوى
-            cards.forEach(c => {
-                c.style.display = (c.dataset.level === level) ? '' : 'none';
-            });
-            sections.forEach(s => {
-                s.style.display = (s.dataset.level === level) ? '' : 'none';
-            });
-        }
-
-        // إعادة تطبيق البحث إذا كان هناك نص في حقل البحث
-        filterBySearch();
-    });
-});
-
-/**
- * ─── البحث في الأوامر ───
- */
-const searchInput = document.getElementById('searchInput');
-
-searchInput.addEventListener('input', filterBySearch);
-
-function filterBySearch() {
-    const query = searchInput.value.toLowerCase().trim();
-    const activeLevel = document.querySelector('.level-tab.active').dataset.level;
-    const cards = document.querySelectorAll('.command-card');
-    const sections = document.querySelectorAll('.section-title');
-
-    // إخفاء/إظهار الأقسام حسب وجود نتائج
-    sections.forEach(section => {
-        const sectionLevel = section.dataset.level;
-        let hasVisibleCards = false;
-
-        // البحث في جميع البطاقات التابعة لهذا القسم
-        let nextEl = section.nextElementSibling;
-        while (nextEl && !nextEl.classList.contains('section-title')) {
-            if (nextEl.classList.contains('command-card')) {
-                const cardLevel = nextEl.dataset.level;
-                const searchData = (nextEl.dataset.search || '').toLowerCase();
-                const commandName = nextEl.querySelector('.command-name').textContent.toLowerCase();
-                const commandDesc = nextEl.querySelector('.command-desc').textContent.toLowerCase();
-
-                // التحقق من المستوى المُختار
-                const levelMatch = (activeLevel === 'all' || cardLevel === activeLevel);
-
-                // التحقق من البحث
-                const searchMatch = !query || 
-                    searchData.includes(query) || 
-                    commandName.includes(query) || 
-                    commandDesc.includes(query);
-
-                if (levelMatch && searchMatch) {
-                    nextEl.style.display = '';
-                    hasVisibleCards = true;
-                } else {
-                    nextEl.style.display = 'none';
-                }
-            }
-            nextEl = nextEl.nextElementSibling;
-        }
-
-        section.style.display = hasVisibleCards ? '' : 'none';
-    });
+/* ═══════════════════════════════════════════
+   البناء — أقسام h2 + بطاقات
+   ═══════════════════════════════════════════ */
+function codeBlock(cmd){
+  return `<div class="code-wrap"><div class="cw-top">
+  <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span>
+  <span class="cw-tag">bash</span>
+  <button class="copy-btn" type="button">📋 ${I18N[state.lang].copy}</button>
+  </div><pre><code>${hl(cmd.code)}</code></pre></div>`;
+}
+function tipBox(t){
+  const cls=t.startsWith("⚠")?"warn":(t.startsWith("⌨")||t.startsWith("🔑")||t.startsWith("📊")||t.startsWith("📅")||t.startsWith("🐳")?"info":"");
+  return `<div class="tip-box ${cls}"><strong>${esc(t)}</strong></div>`;
+}
+function card(cmd,q){
+  const L=I18N[state.lang], lang=state.lang, open=q?true:state.open.has(cmd.id);
+  const el=document.createElement("article");
+  el.className="command-card"+(open?" open":"");
+  el.dataset.id=cmd.id;
+  el.innerHTML=`
+  <button class="command-head" type="button" aria-expanded="${open}">
+    <code class="command-name">${hi(cmd.n,q)}</code>
+    <span class="command-desc">${hi(cmd[lang].d,q)}</span>
+    <span class="tag tag-${cmd.lv}">${L["tab_"+cmd.lv]}</span>
+    <span class="chev" aria-hidden="true">▾</span>
+  </button>
+  <div class="command-body"><div class="cb-in"><div class="cb-pad">
+    <p class="cmd-about">${esc(cmd[lang].a)}</p>
+    ${codeBlock(cmd)}
+    ${cmd[lang].t?tipBox(cmd[lang].t):""}
+  </div></div></div>`;
+  el.querySelector(".command-head").addEventListener("click",()=>{
+    const now=!el.classList.contains("open");
+    el.classList.toggle("open",now);
+    el.querySelector(".command-head").setAttribute("aria-expanded",now);
+    now?state.open.add(cmd.id):state.open.delete(cmd.id);
+  });
+  return el;
 }
 
-/**
- * ─── فتح جميع البطاقات عند البحث ───
- * عند الكتابة في البحث، نفتح البطاقات المطابقة تلقائياً
- */
-searchInput.addEventListener('input', function() {
-    const query = this.value.toLowerCase().trim();
-    if (query.length > 0) {
-        document.querySelectorAll('.command-card').forEach(card => {
-            if (card.style.display !== 'none') {
-                card.classList.add('expanded');
-            }
-        });
-    }
-});
-
-/**
- * ─── اختصارات لوحة المفاتيح ───
- * Ctrl+K = تركيز على حقل البحث
- * Escape = مسح البحث
- */
-document.addEventListener('keydown', function(e) {
-    // Ctrl+K للبحث
-    if (e.ctrlKey && e.key === 'k') {
-        e.preventDefault();
-        searchInput.focus();
-    }
-    // Escape لمسح البحث
-    if (e.key === 'Escape') {
-        searchInput.value = '';
-        searchInput.blur();
-        filterBySearch();
-        // إغلاق جميع البطاقات
-        document.querySelectorAll('.command-card').forEach(c => c.classList.remove('expanded'));
-    }
-});
-
-/**
- * ─── شريط التقدم ───
- */
-window.addEventListener('scroll', function() {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    document.getElementById('progressBar').style.width = scrolled + '%';
-});
-
-/**
- * ─── زر العودة للأعلى ───
- */
-const backToTop = document.getElementById('backToTop');
-window.addEventListener('scroll', function() {
-    if (window.pageYOffset > 300) {
-        backToTop.classList.add('visible');
-    } else {
-        backToTop.classList.remove('visible');
-    }
-});
-
-/**
- * ─── حساب الإحصائيات ───
- */
-function updateStats() {
-    const cards = document.querySelectorAll('.command-card');
-    const counts = { basic: 0, intermediate: 0, advanced: 0, expert: 0 };
-
-    cards.forEach(card => {
-        const level = card.dataset.level;
-        if (counts[level] !== undefined) counts[level]++;
-    });
-
-    const total = cards.length;
-
-    document.getElementById('statTotal').textContent = total;
-    document.getElementById('statBasic').textContent = counts.basic;
-    document.getElementById('statIntermediate').textContent = counts.intermediate;
-    document.getElementById('statAdvanced').textContent = counts.advanced;
-    document.getElementById('statExpert').textContent = counts.expert;
+function render(){
+  const q=state.query.trim().toLowerCase(), L=I18N[state.lang];
+  const box=$("#commands"); box.innerHTML="";
+  let shown=0;
+  for(const lv of ORDER){
+    if(state.level!=="all"&&state.level!==lv)continue;
+    const list=C.filter(c=>c.lv===lv&&(!q||c.hay.includes(q)));
+    if(!list.length)continue;
+    const h=document.createElement("div");
+    h.className="sec-head";
+    h.innerHTML=`<h2>${LV[lv].e} <span>${L["sec_"+lv]}</span></h2><span class="bar" aria-hidden="true"></span>`;
+    box.appendChild(h);
+    list.forEach(c=>{box.appendChild(card(c,q));shown++});
+  }
+  $("#noResults").hidden=shown>0;
+  $("#live").textContent=q?shown+" "+L.results:"";
 }
 
-// تشغيل الإحصائيات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', updateStats);
+function buildStats(){
+  const L=I18N[state.lang];
+  const counts={all:C.length,basic:0,intermediate:0,advanced:0,expert:0};
+  C.forEach(c=>counts[c.lv]++);
+  $("#stats").innerHTML=["all","basic","intermediate","advanced","expert"]
+    .map(k=>`<span class="stat">${LV[k].e} <b>${counts[k]}</b> ${L["tab_"+k]}</span>`).join("");
+}
+
+function buildCotd(){
+  const L=I18N[state.lang], cmd=C[cotdSeed%C.length];
+  $("#cotdRow").innerHTML=`
+  <button class="cotd" id="cotdGo" type="button">
+    <span class="cotd-label">✨ ${L.cotd}</span>
+    <code>${esc(cmd.n)}</code>
+    <span class="cotd-desc">${esc(cmd[state.lang].d)}</span>
+  </button>
+  <button class="cotd-dice" id="cotdDice" type="button" aria-label="🎲">🎲</button>`;
+  $("#cotdGo").onclick=()=>goTo(cmd.id);
+  $("#cotdDice").onclick=()=>{cotdSeed=Math.floor(Math.random()*C.length);buildCotd()};
+}
+
+function goTo(id){
+  state.level="all"; state.query=""; searchInput.value="";
+  setTabsUI(); state.open.add(id); render();
+  requestAnimationFrame(()=>{
+    const el=document.querySelector(`[data-id="${id}"]`);
+    if(!el)return;
+    el.scrollIntoView({behavior:"smooth",block:"center"});
+    el.classList.add("flash");
+    setTimeout(()=>el.classList.remove("flash"),2600);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   اللغة والثيم
+   ═══════════════════════════════════════════ */
+function applyLang(){
+  const L=I18N[state.lang];
+  document.documentElement.lang=state.lang;
+  document.documentElement.dir=state.lang==="ar"?"rtl":"ltr";
+  document.title=L.docTitle;
+  $$("[data-i]").forEach(e=>e.textContent=L[e.dataset.i]);
+  searchInput.placeholder=L.searchPh;
+  const lb=$("#langBtn");
+  lb.textContent=state.lang==="ar"?"EN":"عربي";
+  lb.setAttribute("aria-label",state.lang==="ar"?"Switch to English":"التبديل إلى العربية");
+  buildStats(); buildCotd(); render();
+}
+$("#langBtn").addEventListener("click",()=>{
+  state.lang=state.lang==="ar"?"en":"ar";
+  localStorage.setItem("reesha-lang",state.lang);
+  applyLang();
+});
+
+const themeBtn=$("#themeBtn");
+function setTheme(t,save=true){
+  document.documentElement.dataset.theme=t;
+  if(save)localStorage.setItem("reesha-theme",t);
+  themeBtn.textContent=t==="dark"?"☀️":"🌙";
+  themeBtn.setAttribute("aria-label",t==="dark"?"Switch to light mode":"الوضع الليلي");
+}
+setTheme(document.documentElement.dataset.theme||"light",false);
+themeBtn.addEventListener("click",()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark"));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",e=>{
+  if(!localStorage.getItem("reesha-theme"))setTheme(e.matches?"dark":"light",false);
+});
+
+/* ═══════════════════════════════════════════
+   التفاعلات — تبويبات، بحث، نسخ، اختصارات
+   ═══════════════════════════════════════════ */
+function setTabsUI(){
+  $$(".tab").forEach(b=>{
+    const on=b.dataset.level===state.level;
+    b.classList.toggle("active",on);
+    b.setAttribute("aria-pressed",on);
+  });
+}
+$$(".tab").forEach(b=>b.addEventListener("click",()=>{
+  state.level=b.dataset.level; setTabsUI(); render();
+}));
+
+$("#expandAll").addEventListener("click",()=>{C.forEach(c=>state.open.add(c.id));render()});
+$("#collapseAll").addEventListener("click",()=>{state.open.clear();render()});
+
+searchInput.addEventListener("input",()=>{state.query=searchInput.value;render()});
+
+document.addEventListener("keydown",e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();searchInput.focus();searchInput.select()}
+  else if(e.key==="/"&&document.activeElement!==searchInput){e.preventDefault();searchInput.focus()}
+  else if(e.key==="Escape"){
+    searchInput.value=""; state.query=""; state.open.clear();
+    searchInput.blur(); render();
+  }
+});
+
+/* نسخ الكود (تفويض واحد لكل الأزرار) */
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".copy-btn");
+  if(!b)return;
+  const txt=b.closest(".code-wrap").querySelector("pre").textContent;
+  const ok=()=>{
+    b.classList.add("ok");
+    b.textContent="✅ "+I18N[state.lang].copied;
+    setTimeout(()=>{b.classList.remove("ok");b.textContent="📋 "+I18N[state.lang].copy},1600);
+  };
+  const fallback=()=>{
+    const ta=document.createElement("textarea");
+    ta.value=txt; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select();
+    try{document.execCommand("copy")}catch(_){}
+    document.body.removeChild(ta); ok();
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText)
+    navigator.clipboard.writeText(txt).then(ok).catch(fallback);
+  else fallback();
+});
+
+/* شريط التقدم + زر العودة */
+const prog=$("#progress"), toTop=$("#toTop");
+addEventListener("scroll",()=>{
+  const h=document.documentElement;
+  prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";
+  toTop.classList.toggle("show",h.scrollTop>400);
+},{passive:true});
+toTop.addEventListener("click",()=>scrollTo({top:0,behavior:"smooth"}));
+
+$("#year").textContent=new Date().getFullYear();
+applyLang();
 </script>
-
 </body>
 </html>
